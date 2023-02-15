@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nnu.edu.station.dao.level.ZhejiangMapper">
+    <select id="getInfoByStation" resultType="java.util.Map">
+        select time, station, water_level as "waterLevel", rainfall, output, input, capacity from zhejiang_station
+        where station = #{station}
+    </select>
+
+    <select id="getInfoByStationAndTime" resultType="java.util.Map">
+        select time, station, water_level as "waterLevel", rainfall, output, input, capacity from zhejiang_station
+        where station = #{station} and time &gt;= #{startTime} and time &lt;= #{endTime}
+        order by time asc
+    </select>
+
+    <select id="getStationName" resultType="java.lang.String">
+        select station from zhejiang_station group by station
+    </select>
+
+    <select id="quireEarliestTime" resultType="java.lang.String">
+        select min(time) from zhejiang_station
+    </select>
+
+    <select id="quireNowTime" resultType="java.lang.String">
+        select max(time) from zhejiang_station
+    </select>
+</mapper>

@@ -1,0 +1,26 @@
+[
+    {
+        "station": "凤凰颈站",
+        "stcd": "62904320",
+        "zxstcd": "",
+        "sttp": "DD",
+        "zxsttp": "ZZ",
+        "name": "GetSwLineAndZX"
+    },
+    {
+        "station": "芜湖",
+        "stcd": "60115400",
+        "zxstcd": "",
+        "sttp": "ZQ",
+        "zxsttp": "",
+        "name": "GetSwLineMap"
+    },
+    {
+        "station": "马鞍山",
+        "stcd": "60115800",
+        "zxstcd": "",
+        "sttp": "ZZ",
+        "zxsttp": "",
+        "name": "GetSwLineMap"
+    }
+]

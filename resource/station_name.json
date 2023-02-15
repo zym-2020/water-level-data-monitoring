@@ -1,0 +1,132 @@
+[
+	{
+		"name": "九江",
+		"name_en": "jiujiang",
+		"keys": ["flow", "waterLevel"]
+	},
+	{
+		"name": "大通",
+		"name_en": "datong",
+		"keys": ["flow", "waterLevel"]
+	},
+	{
+		"name": "镇江",
+		"name_en": "zhenjiang",
+		"keys": ["waterLevel"]
+	},
+	{
+		"name": "南京",
+		"name_en": "nanjing",
+		"keys": ["waterLevel"]
+	},
+	{
+		"name": "江阴",
+		"name_en": "jiangyin",
+		"keys": ["waterLevel"]
+	},
+	{
+		"name": "天生港",
+		"name_en": "tianshenggang",
+		"keys": ["waterLevel"]
+	},
+	{
+		"name": "徐六泾",
+		"name_en": "xuliujing",
+		"keys": ["waterLevel"]
+	},
+	{
+		"name": "吴淞",
+		"name_en": "wusong",
+		"keys": ["waterLevel"]
+	},
+	{
+		"name": "燕尾港",
+		"name_en": "yanweigang",
+		"keys": ["waterLevel"]
+	},
+	{
+		"name": "滨海闸",
+		"name_en": "binhaizha",
+		"keys": ["waterLevel"]
+	},
+	{
+		"name": "新洋港闸",
+		"name_en": "xinyanggangzha",
+		"keys": ["waterLevel"]
+	},
+	{
+		"name": "小洋口闸",
+		"name_en": "xiaoyangkouzha",
+		"keys": ["waterLevel"]
+	},
+	{
+		"name": "掘港",
+		"name_en": "juegang",
+		"keys": ["waterLevel"]
+	},
+	{
+		"name": "凤凰颈站",
+		"name_en": "fenghuangjingzhan",
+		"keys": ["waterLevel"]
+	},
+	{
+		"name": "芜湖",
+		"name_en": "wuhu",
+		"keys": ["waterLevel"]
+	},
+	{
+		"name": "马鞍山",
+		"name_en": "maanshan",
+		"keys": ["waterLevel"]
+	},
+	{
+		"name": "岱山",
+		"name_en": "daishan",
+		"keys": ["waterLevel"]
+	},
+	{
+		"name": "泗礁",
+		"name_en": "sijiao",
+		"keys": ["waterLevel"]
+	},
+	{
+		"name": "定海",
+		"name_en": "dinghai",
+		"keys": ["waterLevel"]
+	},
+	{
+		"name": "衢山",
+		"name_en": "qushan",
+		"keys": ["waterLevel"]
+	},
+	{
+		"name": "盐官",
+		"name_en": "yanguan",
+		"keys": ["waterLevel"]
+	},
+	{
+		"name": "澉浦",
+		"name_en": "ganpu",
+		"keys": ["waterLevel"]
+	},
+	{
+		"name": "闸口",
+		"name_en": "zhakou",
+		"keys": ["waterLevel"]
+	},
+	{
+		"name": "仓前",
+		"name_en": "cangqian",
+		"keys": ["waterLevel"]
+	},
+	{
+		"name": "桐庐",
+		"name_en": "tonglu",
+		"keys": ["waterLevel"]
+	},
+	{
+		"name": "富春江水库",
+		"name_en": "fuchunjiangshuiku",
+		"keys": ["waterLevel", "output"]
+	},
+]

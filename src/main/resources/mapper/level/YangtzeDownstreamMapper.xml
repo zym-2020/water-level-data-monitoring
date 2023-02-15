@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nnu.edu.station.dao.level.YangtzeDownstreamMapper">
+    <select id="getAllInfoByStation" resultType="java.util.Map">
+        select station, time, water_level as "waterLevel", flow from yangtze_downstream where station = #{station}
+    </select>
+
+    <select id="getInfoByStationAndTime" resultType="java.util.Map">
+        select station, time, water_level as "waterLevel", flow from yangtze_downstream where station = #{station} and time &gt;= #{startTime} and time &lt;= #{endTime}
+    </select>
+
+    <select id="getInfoByStationAndTimeAsc" resultType="java.util.Map">
+        select station, time, water_level as "waterLevel", flow from yangtze_downstream
+        where station = #{station} and time &gt;= #{startTime} and time &lt;= #{endTime}
+        order by time asc
+    </select>
+
+    <select id="getStationName" resultType="java.lang.String">
+        select station from yangtze_downstream group by station
+    </select>
+
+    <select id="quireEarliestTime" resultType="java.lang.String">
+        select min(time) from yangtze_downstream
+    </select>
+
+    <select id="quireNowTime" resultType="java.lang.String">
+        select max(time) from yangtze_downstream
+    </select>
+</mapper>

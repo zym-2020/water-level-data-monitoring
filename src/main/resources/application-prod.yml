@@ -1,0 +1,40 @@
+spring:
+  datasource:
+    level:
+      jdbc-url: jdbc:sqlite:C:\water_level_data\water_level.db
+      driver-class-name: org.sqlite.JDBC
+
+pythondir:
+  C:/water_level_data/
+python:
+  python
+basedir:
+  C:/water_level_data/data/
+waterleveldb:
+  C:/water_level_data/water_level.db
+stationnamejson:
+  C:/water_level_data/station_name.json
+
+waterlevellog:
+  C:/water_level_data/yangtze_downstream_log.txt
+
+zhejianglog:
+  C:/water_level_data/zhejiang_log.txt
+zhejiangjson:
+  C:/water_level_data/zhejiang_station.json
+
+anhuilog:
+  C:/water_level_data/anhui_log.txt
+anhuijson:
+  C:/water_level_data/nodescript/station.json
+nodescriptpath:
+  C:/water_level_data/nodescript/
+
+jiangsulog:
+  C:/water_level_data/jiangsu_log.txt
+jiangsujson:
+  C:/water_level_data/jiangsu_station.json
+pngpath:
+  C:/water_level_data/png/
+
+

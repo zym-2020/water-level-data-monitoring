@@ -1,0 +1,43 @@
+spring:
+  datasource:
+    level:
+      jdbc-url: jdbc:sqlite:D:\zhuomian\水科院\python\水位\water_level.db
+      driver-class-name: org.sqlite.JDBC
+
+pythondir:
+  D:/zhuomian/水科院/python/水位/
+python:
+  python
+basedir:
+  D:/zhuomian/水科院/python/水位/data/
+waterleveldb:
+  D:/zhuomian/水科院/python/水位/water_level.db
+stationnamejson:
+  D:/zhuomian/水科院/python/水位/station_name.json
+
+waterlevellog:
+  D:/zhuomian/水科院/python/水位/yangtze_downstream_log.txt
+
+zhejianglog:
+  D:/zhuomian/水科院/python/水位/zhejiang_log.txt
+zhejiangjson:
+  D:/zhuomian/水科院/python/水位/zhejiang_station.json
+
+anhuilog:
+  D:/zhuomian/水科院/python/水位/anhui_log.txt
+anhuijson:
+  D:/zhuomian/水科院/python/水位/nodescript/station.json
+nodescriptpath:
+  D:/zhuomian/水科院/python/水位/nodescript/
+
+jiangsulog:
+  D:/zhuomian/水科院/python/水位/jiangsu_log.txt
+jiangsujson:
+  D:/zhuomian/水科院/python/水位/jiangsu_station.json
+pngpath:
+  D:/zhuomian/test/png/
+
+
+
+
+
