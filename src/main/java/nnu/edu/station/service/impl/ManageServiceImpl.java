@@ -5,10 +5,7 @@ import com.alibaba.fastjson2.JSONObject;
 import nnu.edu.station.common.exception.MyException;
 import nnu.edu.station.common.result.ResultEnum;
 import nnu.edu.station.common.utils.FileUtil;
-import nnu.edu.station.dao.level.AnhuiMapper;
-import nnu.edu.station.dao.level.JiangsuMapper;
-import nnu.edu.station.dao.level.YangtzeDownstreamMapper;
-import nnu.edu.station.dao.level.ZhejiangMapper;
+import nnu.edu.station.dao.level.*;
 import nnu.edu.station.service.ManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,11 +40,17 @@ public class ManageServiceImpl implements ManageService {
     @Autowired
     ZhejiangMapper zhejiangMapper;
 
+    @Autowired
+    HubeiMapper hubeiMapper;
+
     @Value("${stationnamejson}")
     String stationNameJson;
 
     @Value("${basedir}")
     String baseDir;
+
+    @Value("${data-path}")
+    String utcDataPath;
 
     @Override
     public String quireEarliestTime(String type) {
@@ -59,6 +62,8 @@ public class ManageServiceImpl implements ManageService {
             return zhejiangMapper.quireEarliestTime();
         } else if (type.equals("downstream")) {
             return yangtzeDownstreamMapper.quireEarliestTime();
+        } else if (type.equals("hubei")) {
+            return hubeiMapper.quireEarliestTime();
         } else {
             throw new MyException(ResultEnum.QUERY_TYPE_ERROR);
         }
@@ -74,6 +79,8 @@ public class ManageServiceImpl implements ManageService {
             return zhejiangMapper.quireNowTime();
         } else if (type.equals("downstream")) {
             return yangtzeDownstreamMapper.quireNowTime();
+        } else if (type.equals("hubei")) {
+            return hubeiMapper.quireNowTime();
         } else {
             throw new MyException(ResultEnum.QUERY_TYPE_ERROR);
         }
@@ -81,6 +88,7 @@ public class ManageServiceImpl implements ManageService {
 
     @Override
     public void cacheAll(JSONObject jsonObject) {
+        int flag = jsonObject.getIntValue("flag");
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         sdf.setLenient(false);
 
@@ -89,8 +97,17 @@ public class ManageServiceImpl implements ManageService {
             Calendar cal = Calendar.getInstance();
             cal.setTime(sdf.parse(time));
             cal.add(Calendar.DATE, -1);
-            String startTime = sdf.format(cal.getTime()) + " 08:00:00";
-            String endTime = time + " 07:00:00";
+            String startTime, endTime;
+            if (flag == 1) {
+                startTime = sdf.format(cal.getTime()) + " 08:00:00";
+                endTime = time + " 07:00:00";
+            } else if (flag == 2) {
+                startTime = sdf.format(cal.getTime()) + " 00:00:00";
+                endTime = sdf.format(cal.getTime()) + " 23:59:00";
+            } else {
+                throw new MyException(-99, "参数flag错误");
+            }
+
             JSONArray jsonArray = FileUtil.readJsonArrayFile(stationNameJson);
             List<String> addresses = new ArrayList<>();
 
@@ -103,16 +120,26 @@ public class ManageServiceImpl implements ManageService {
             for (String station : downstreamStationList) {
                 String name = "";
                 List<String> keys = new ArrayList<>();
+                List<String> keys_cn = new ArrayList<>();
                 for (int i = 0; i < jsonArray.size(); i++) {
                     if (station.equals((jsonArray.getObject(i, JSONObject.class)).getString("name"))) {
                         name = (jsonArray.getObject(i, JSONObject.class)).getString("name_en");
                         keys = (jsonArray.getObject(i, JSONObject.class)).getObject("keys", List.class);
+                        keys_cn = (jsonArray.getObject(i, JSONObject.class)).getObject("keys_cn", List.class);
                     }
                 }
+                if (name.equals("")) {
+                    System.out.println(station);
+                }
                 List<Map<String, Object>> infoList = yangtzeDownstreamMapper.getInfoByStationAndTimeAsc(station, startTime, endTime);
-                String fileAddress = baseDir + name + time + ".txt";
+                String fileAddress;
+                if (flag == 1) {
+                    fileAddress = baseDir + name + time + ".txt";
+                } else {
+                    fileAddress = utcDataPath + name + "UTC+8" + time + ".txt";
+                }
                 addresses.add(fileAddress);
-                FileUtil.saveFile(infoList, fileAddress, keys);
+                FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
             }
 
             /**
@@ -124,16 +151,26 @@ public class ManageServiceImpl implements ManageService {
             for (String station : ahStationList) {
                 String name = "";
                 List<String> keys = new ArrayList<>();
+                List<String> keys_cn = new ArrayList<>();
                 for (int i = 0; i < jsonArray.size(); i++) {
                     if (station.equals((jsonArray.getObject(i, JSONObject.class)).getString("name"))) {
                         name = (jsonArray.getObject(i, JSONObject.class)).getString("name_en");
                         keys = (jsonArray.getObject(i, JSONObject.class)).getObject("keys", List.class);
+                        keys_cn = (jsonArray.getObject(i, JSONObject.class)).getObject("keys_cn", List.class);
                     }
                 }
+                if (name.equals("")) {
+                    System.out.println(station);
+                }
                 List<Map<String, Object>> infoList = anhuiMapper.getInfoByStationAndTime(station, startTime, endTime);
-                String fileAddress = baseDir + name + time + ".txt";
+                String fileAddress;
+                if (flag == 1) {
+                    fileAddress = baseDir + name + time + ".txt";
+                } else {
+                    fileAddress = utcDataPath + name + "UTC+8" + time + ".txt";
+                }
                 addresses.add(fileAddress);
-                FileUtil.saveFile(infoList, fileAddress, keys);
+                FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
             }
 
             /**
@@ -145,16 +182,26 @@ public class ManageServiceImpl implements ManageService {
             for (String station : jsStationList) {
                 String name = "";
                 List<String> keys = new ArrayList<>();
+                List<String> keys_cn = new ArrayList<>();
                 for (int i = 0; i < jsonArray.size(); i++) {
                     if (station.equals((jsonArray.getObject(i, JSONObject.class)).getString("name"))) {
                         name = (jsonArray.getObject(i, JSONObject.class)).getString("name_en");
                         keys = (jsonArray.getObject(i, JSONObject.class)).getObject("keys", List.class);
+                        keys_cn = (jsonArray.getObject(i, JSONObject.class)).getObject("keys_cn", List.class);
                     }
                 }
+                if (name.equals("")) {
+                    System.out.println(station);
+                }
                 List<Map<String, Object>> infoList = jiangsuMapper.getInfoByStationAndTime(station, startTime, endTime);
-                String fileAddress = baseDir + name + time + ".txt";
+                String fileAddress;
+                if (flag == 1) {
+                    fileAddress = baseDir + name + time + ".txt";
+                } else {
+                    fileAddress = utcDataPath + name + "UTC+8" + time + ".txt";
+                }
                 addresses.add(fileAddress);
-                FileUtil.saveFile(infoList, fileAddress, keys);
+                FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
             }
 
             /**
@@ -166,36 +213,92 @@ public class ManageServiceImpl implements ManageService {
             for (String station : zjStationList) {
                 String name = "";
                 List<String> keys = new ArrayList<>();
+                List<String> keys_cn = new ArrayList<>();
                 for (int i = 0; i < jsonArray.size(); i++) {
                     if (station.equals((jsonArray.getObject(i, JSONObject.class)).getString("name"))) {
                         name = (jsonArray.getObject(i, JSONObject.class)).getString("name_en");
                         keys = (jsonArray.getObject(i, JSONObject.class)).getObject("keys", List.class);
+                        keys_cn = (jsonArray.getObject(i, JSONObject.class)).getObject("keys_cn", List.class);
                     }
                 }
+                if (name.equals("")) {
+                    System.out.println(station);
+                }
                 List<Map<String, Object>> infoList = zhejiangMapper.getInfoByStationAndTime(station, startTime, endTime);
-                String fileAddress = baseDir + name + time + ".txt";
+                String fileAddress;
+                if (flag == 1) {
+                    fileAddress = baseDir + name + time + ".txt";
+                } else {
+                    fileAddress = utcDataPath + name + "UTC+8" + time + ".txt";
+                }
                 addresses.add(fileAddress);
-                FileUtil.saveFile(infoList, fileAddress, keys);
+                FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
+            }
+
+            /**
+            * @Description:湖北文件缓存
+            * @Author: Yiming
+            * @Date: 2023/2/19
+            */
+            List<String> hbStationList = hubeiMapper.getStationName();
+            for (String station : hbStationList) {
+                String name = "";
+                List<String> keys = new ArrayList<>();
+                List<String> keys_cn = new ArrayList<>();
+                for (int i = 0; i < jsonArray.size(); i++) {
+                    if (station.equals((jsonArray.getObject(i, JSONObject.class)).getString("name"))) {
+                        name = (jsonArray.getObject(i, JSONObject.class)).getString("name_en");
+                        keys = (jsonArray.getObject(i, JSONObject.class)).getObject("keys", List.class);
+                        keys_cn = (jsonArray.getObject(i, JSONObject.class)).getObject("keys_cn", List.class);
+                    }
+                }
+                if (name.equals("")) {
+                    System.out.println(station);
+                }
+                List<Map<String, Object>> infoList = hubeiMapper.getInfoByStationAndTime(station, startTime, endTime);
+                String fileAddress;
+                if (flag == 1) {
+                    fileAddress = baseDir + name + time + ".txt";
+                } else {
+                    fileAddress = utcDataPath + name + "UTC+8" + time + ".txt";
+                }
+                addresses.add(fileAddress);
+                FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
             }
 
 
             for (int i = 0; i < jsonArray.size(); i++) {
-                String des = baseDir + jsonArray.getJSONObject(i).getString("name_en") + ".zip";
-                List<String> addressList = new ArrayList<>();
-                addressList.add(baseDir + jsonArray.getJSONObject(i).getString("name_en") + time + ".txt");
-                FileUtil.compressFile(des, addressList);
+                if (flag == 1) {
+                    String des = baseDir + jsonArray.getJSONObject(i).getString("name_en") + ".zip";
+                    List<String> addressList = new ArrayList<>();
+                    addressList.add(baseDir + jsonArray.getJSONObject(i).getString("name_en") + time + ".txt");
+                    FileUtil.compressFile(des, addressList);
+                } else {
+                    String des = utcDataPath + jsonArray.getJSONObject(i).getString("name_en") + "UTC+8" + ".zip";
+                    List<String> addressList = new ArrayList<>();
+                    addressList.add(utcDataPath + jsonArray.getJSONObject(i).getString("name_en") + "UTC+8" + time + ".txt");
+                    FileUtil.compressFile(des, addressList);
+                }
+
             }
 
-            String destination = baseDir + "all.zip";
-            FileUtil.compressFile(destination, addresses);
+            if (flag == 1) {
+                String destination = baseDir + "all.zip";
+                FileUtil.compressFile(destination, addresses);
+            } else {
+                String destination = utcDataPath + "allUTC+8.zip";
+                FileUtil.compressFile(destination, addresses);
+            }
 
         } catch (Exception e) {
+            System.out.println(e);
             throw new MyException(ResultEnum.QUERY_TYPE_ERROR);
         }
     }
 
     @Override
     public void cacheByType(JSONObject jsonObject) {
+        int flag = jsonObject.getIntValue("flag");
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         sdf.setLenient(false);
         try {
@@ -204,8 +307,16 @@ public class ManageServiceImpl implements ManageService {
             Calendar cal = Calendar.getInstance();
             cal.setTime(sdf.parse(time));
             cal.add(Calendar.DATE, -1);
-            String startTime = sdf.format(cal.getTime()) + " 08:00:00";
-            String endTime = time + " 07:00:00";
+            String startTime, endTime;
+            if (flag == 1) {
+                startTime = sdf.format(cal.getTime()) + " 08:00:00";
+                endTime = time + " 07:00:00";
+            } else if (flag == 2) {
+                startTime = sdf.format(cal.getTime()) + " 00:00:00";
+                endTime = sdf.format(cal.getTime()) + " 23:59:00";
+            } else {
+                throw new MyException(-99, "参数flag错误");
+            }
             JSONArray jsonArray = FileUtil.readJsonArrayFile(stationNameJson);
             List<String> addresses = new ArrayList<>();
 
@@ -214,91 +325,188 @@ public class ManageServiceImpl implements ManageService {
                 for (String station : downstreamStationList) {
                     String name = "";
                     List<String> keys = new ArrayList<>();
+                    List<String> keys_cn = new ArrayList<>();
                     for (int i = 0; i < jsonArray.size(); i++) {
                         if (station.equals((jsonArray.getObject(i, JSONObject.class)).getString("name"))) {
                             name = (jsonArray.getObject(i, JSONObject.class)).getString("name_en");
                             keys = (jsonArray.getObject(i, JSONObject.class)).getObject("keys", List.class);
+                            keys_cn = (jsonArray.getObject(i, JSONObject.class)).getObject("keys_cn", List.class);
                         }
                     }
                     List<Map<String, Object>> infoList = yangtzeDownstreamMapper.getInfoByStationAndTimeAsc(station, startTime, endTime);
-                    String fileAddress = baseDir + name + time + ".txt";
-                    addresses.add(fileAddress);
-                    FileUtil.saveFile(infoList, fileAddress, keys);
 
-                    String des = baseDir + name + ".zip";
-                    List<String> addressList = new ArrayList<>();
-                    addressList.add(fileAddress);
-                    FileUtil.compressFile(des, addressList);
+                    String fileAddress;
+                    if (flag == 1) {
+                        fileAddress = baseDir + name + time + ".txt";
+                    } else {
+                        fileAddress = utcDataPath + name + "UTC+8" + time + ".txt";
+                    }
+                    addresses.add(fileAddress);
+                    FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
+
+                    if (flag == 1) {
+                        String des = baseDir + name + ".zip";
+                        List<String> addressList = new ArrayList<>();
+                        addressList.add(baseDir + name + time + ".txt");
+                        FileUtil.compressFile(des, addressList);
+                    } else {
+                        String des = utcDataPath + name + "UTC+8" + ".zip";
+                        List<String> addressList = new ArrayList<>();
+                        addressList.add(utcDataPath + name + "UTC+8" + time + ".txt");
+                        FileUtil.compressFile(des, addressList);
+                    }
                 }
             } else if (type.equals("anhui")) {
                 List<String> ahStationList = anhuiMapper.getStationName();
                 for (String station : ahStationList) {
                     String name = "";
                     List<String> keys = new ArrayList<>();
+                    List<String> keys_cn = new ArrayList<>();
                     for (int i = 0; i < jsonArray.size(); i++) {
                         if (station.equals((jsonArray.getObject(i, JSONObject.class)).getString("name"))) {
                             name = (jsonArray.getObject(i, JSONObject.class)).getString("name_en");
                             keys = (jsonArray.getObject(i, JSONObject.class)).getObject("keys", List.class);
+                            keys_cn = (jsonArray.getObject(i, JSONObject.class)).getObject("keys_cn", List.class);
                         }
                     }
                     List<Map<String, Object>> infoList = anhuiMapper.getInfoByStationAndTime(station, startTime, endTime);
-                    String fileAddress = baseDir + name + time + ".txt";
+                    String fileAddress;
+                    if (flag == 1) {
+                        fileAddress = baseDir + name + time + ".txt";
+                    } else {
+                        fileAddress = utcDataPath + name + "UTC+8" + time + ".txt";
+                    }
                     addresses.add(fileAddress);
-                    FileUtil.saveFile(infoList, fileAddress, keys);
+                    FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
 
-                    String des = baseDir + name + ".zip";
-                    List<String> addressList = new ArrayList<>();
-                    addressList.add(fileAddress);
-                    FileUtil.compressFile(des, addressList);
+                    if (flag == 1) {
+                        String des = baseDir + name + ".zip";
+                        List<String> addressList = new ArrayList<>();
+                        addressList.add(baseDir + name + time + ".txt");
+                        FileUtil.compressFile(des, addressList);
+                    } else {
+                        String des = utcDataPath + name + "UTC+8" + ".zip";
+                        List<String> addressList = new ArrayList<>();
+                        addressList.add(utcDataPath + name + "UTC+8" + time + ".txt");
+                        FileUtil.compressFile(des, addressList);
+                    }
                 }
             } else if (type.equals("jiangsu")) {
-                List<String> jsStationList = jiangsuMapper.getStationName();
-                for (String station : jsStationList) {
+                List<String> ahStationList = jiangsuMapper.getStationName();
+                for (String station : ahStationList) {
                     String name = "";
                     List<String> keys = new ArrayList<>();
+                    List<String> keys_cn = new ArrayList<>();
                     for (int i = 0; i < jsonArray.size(); i++) {
                         if (station.equals((jsonArray.getObject(i, JSONObject.class)).getString("name"))) {
                             name = (jsonArray.getObject(i, JSONObject.class)).getString("name_en");
                             keys = (jsonArray.getObject(i, JSONObject.class)).getObject("keys", List.class);
+                            keys_cn = (jsonArray.getObject(i, JSONObject.class)).getObject("keys_cn", List.class);
                         }
                     }
                     List<Map<String, Object>> infoList = jiangsuMapper.getInfoByStationAndTime(station, startTime, endTime);
-                    String fileAddress = baseDir + name + time + ".txt";
+                    String fileAddress;
+                    if (flag == 1) {
+                        fileAddress = baseDir + name + time + ".txt";
+                    } else {
+                        fileAddress = utcDataPath + name + "UTC+8" + time + ".txt";
+                    }
                     addresses.add(fileAddress);
-                    FileUtil.saveFile(infoList, fileAddress, keys);
+                    FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
 
-                    String des = baseDir + name + ".zip";
-                    List<String> addressList = new ArrayList<>();
-                    addressList.add(fileAddress);
-                    FileUtil.compressFile(des, addressList);
+                    if (flag == 1) {
+                        String des = baseDir + name + ".zip";
+                        List<String> addressList = new ArrayList<>();
+                        addressList.add(baseDir + name + time + ".txt");
+                        FileUtil.compressFile(des, addressList);
+                    } else {
+                        String des = utcDataPath + name + "UTC+8" + ".zip";
+                        List<String> addressList = new ArrayList<>();
+                        addressList.add(utcDataPath + name + "UTC+8" + time + ".txt");
+                        FileUtil.compressFile(des, addressList);
+                    }
                 }
             } else if (type.equals("zhejiang")) {
-                List<String> zjStationList = zhejiangMapper.getStationName();
-                for (String station : zjStationList) {
+                List<String> ahStationList = zhejiangMapper.getStationName();
+                for (String station : ahStationList) {
                     String name = "";
                     List<String> keys = new ArrayList<>();
+                    List<String> keys_cn = new ArrayList<>();
                     for (int i = 0; i < jsonArray.size(); i++) {
                         if (station.equals((jsonArray.getObject(i, JSONObject.class)).getString("name"))) {
                             name = (jsonArray.getObject(i, JSONObject.class)).getString("name_en");
                             keys = (jsonArray.getObject(i, JSONObject.class)).getObject("keys", List.class);
+                            keys_cn = (jsonArray.getObject(i, JSONObject.class)).getObject("keys_cn", List.class);
                         }
                     }
                     List<Map<String, Object>> infoList = zhejiangMapper.getInfoByStationAndTime(station, startTime, endTime);
-                    String fileAddress = baseDir + name + time + ".txt";
+                    String fileAddress;
+                    if (flag == 1) {
+                        fileAddress = baseDir + name + time + ".txt";
+                    } else {
+                        fileAddress = utcDataPath + name + "UTC+8" + time + ".txt";
+                    }
                     addresses.add(fileAddress);
-                    FileUtil.saveFile(infoList, fileAddress, keys);
+                    FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
 
-                    String des = baseDir + name + ".zip";
-                    List<String> addressList = new ArrayList<>();
-                    addressList.add(fileAddress);
-                    FileUtil.compressFile(des, addressList);
+                    if (flag == 1) {
+                        String des = baseDir + name + ".zip";
+                        List<String> addressList = new ArrayList<>();
+                        addressList.add(baseDir + name + time + ".txt");
+                        FileUtil.compressFile(des, addressList);
+                    } else {
+                        String des = utcDataPath + name + "UTC+8" + ".zip";
+                        List<String> addressList = new ArrayList<>();
+                        addressList.add(utcDataPath + name + "UTC+8" + time + ".txt");
+                        FileUtil.compressFile(des, addressList);
+                    }
+                }
+            } else if (type.equals("hubei")) {
+                List<String> ahStationList = hubeiMapper.getStationName();
+                for (String station : ahStationList) {
+                    String name = "";
+                    List<String> keys = new ArrayList<>();
+                    List<String> keys_cn = new ArrayList<>();
+                    for (int i = 0; i < jsonArray.size(); i++) {
+                        if (station.equals((jsonArray.getObject(i, JSONObject.class)).getString("name"))) {
+                            name = (jsonArray.getObject(i, JSONObject.class)).getString("name_en");
+                            keys = (jsonArray.getObject(i, JSONObject.class)).getObject("keys", List.class);
+                            keys_cn = (jsonArray.getObject(i, JSONObject.class)).getObject("keys_cn", List.class);
+                        }
+                    }
+                    List<Map<String, Object>> infoList = hubeiMapper.getInfoByStationAndTime(station, startTime, endTime);
+                    String fileAddress;
+                    if (flag == 1) {
+                        fileAddress = baseDir + name + time + ".txt";
+                    } else {
+                        fileAddress = utcDataPath + name + "UTC+8" + time + ".txt";
+                    }
+                    addresses.add(fileAddress);
+                    FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
+
+                    if (flag == 1) {
+                        String des = baseDir + name + ".zip";
+                        List<String> addressList = new ArrayList<>();
+                        addressList.add(baseDir + name + time + ".txt");
+                        FileUtil.compressFile(des, addressList);
+                    } else {
+                        String des = utcDataPath + name + "UTC+8" + ".zip";
+                        List<String> addressList = new ArrayList<>();
+                        addressList.add(utcDataPath + name + "UTC+8" + time + ".txt");
+                        FileUtil.compressFile(des, addressList);
+                    }
                 }
             } else {
                 throw new MyException(ResultEnum.QUERY_TYPE_ERROR);
             }
 
-            String destination = baseDir + "all.zip";
-            FileUtil.compressFile(destination, addresses);
+            if (flag == 1) {
+                String destination = baseDir + "all.zip";
+                FileUtil.compressFile(destination, addresses);
+            } else {
+                String destination = utcDataPath + "allUTC+8.zip";
+                FileUtil.compressFile(destination, addresses);
+            }
 
         } catch (Exception e) {
             throw new MyException(ResultEnum.QUERY_TYPE_ERROR);
@@ -307,6 +515,7 @@ public class ManageServiceImpl implements ManageService {
 
     @Override
     public void cacheByStation(JSONObject jsonObject) {
+        int flag = jsonObject.getIntValue("flag");
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         sdf.setLenient(false);
         try {
@@ -316,90 +525,191 @@ public class ManageServiceImpl implements ManageService {
             Calendar cal = Calendar.getInstance();
             cal.setTime(sdf.parse(time));
             cal.add(Calendar.DATE, -1);
-            String startTime = sdf.format(cal.getTime()) + " 08:00:00";
-            String endTime = time + " 07:00:00";
+            String startTime, endTime;
+            if (flag == 1) {
+                startTime = sdf.format(cal.getTime()) + " 08:00:00";
+                endTime = time + " 07:00:00";
+            } else if (flag == 2) {
+                startTime = sdf.format(cal.getTime()) + " 00:00:00";
+                endTime = sdf.format(cal.getTime()) + " 23:59:00";
+            } else {
+                throw new MyException(-99, "参数flag错误");
+            }
 
             JSONArray jsonArray = FileUtil.readJsonArrayFile(stationNameJson);
             List<String> addresses = new ArrayList<>();
 
             if (type.equals("downstream")) {
                 List<String> keys = new ArrayList<>();
+                List<String> keys_cn = new ArrayList<>();
                 String name = "";
                 for (int i = 0; i < jsonArray.size(); i++) {
                     if (station.equals((jsonArray.getObject(i, JSONObject.class)).getString("name"))) {
                         name = (jsonArray.getObject(i, JSONObject.class)).getString("name_en");
                         keys = (jsonArray.getObject(i, JSONObject.class)).getObject("keys", List.class);
+                        keys_cn = (jsonArray.getObject(i, JSONObject.class)).getObject("keys_cn", List.class);
                     }
                 }
                 List<Map<String, Object>> infoList = yangtzeDownstreamMapper.getInfoByStationAndTimeAsc(station, startTime, endTime);
-                String fileAddress = baseDir + name + time + ".txt";
+                String fileAddress;
+                if (flag == 1) {
+                    fileAddress = baseDir + name + time + ".txt";
+                } else {
+                    fileAddress = utcDataPath + name + "UTC+8" + time + ".txt";
+                }
                 addresses.add(fileAddress);
-                FileUtil.saveFile(infoList, fileAddress, keys);
+                FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
 
-                String des = baseDir + name + ".zip";
-                List<String> addressList = new ArrayList<>();
-                addressList.add(fileAddress);
-                FileUtil.compressFile(des, addressList);
+                if (flag == 1) {
+                    String des = baseDir + name + ".zip";
+                    List<String> addressList = new ArrayList<>();
+                    addressList.add(baseDir + name + time + ".txt");
+                    FileUtil.compressFile(des, addressList);
+                } else {
+                    String des = utcDataPath + name + "UTC+8" + ".zip";
+                    List<String> addressList = new ArrayList<>();
+                    addressList.add(utcDataPath + name + "UTC+8" + time + ".txt");
+                    FileUtil.compressFile(des, addressList);
+                }
             } else if (type.equals("anhui")) {
                 List<String> keys = new ArrayList<>();
+                List<String> keys_cn = new ArrayList<>();
                 String name = "";
                 for (int i = 0; i < jsonArray.size(); i++) {
                     if (station.equals((jsonArray.getObject(i, JSONObject.class)).getString("name"))) {
                         name = (jsonArray.getObject(i, JSONObject.class)).getString("name_en");
                         keys = (jsonArray.getObject(i, JSONObject.class)).getObject("keys", List.class);
+                        keys_cn = (jsonArray.getObject(i, JSONObject.class)).getObject("keys_cn", List.class);
                     }
                 }
                 List<Map<String, Object>> infoList = anhuiMapper.getInfoByStationAndTime(station, startTime, endTime);
-                String fileAddress = baseDir + name + time + ".txt";
+                String fileAddress;
+                if (flag == 1) {
+                    fileAddress = baseDir + name + time + ".txt";
+                } else {
+                    fileAddress = utcDataPath + name + "UTC+8" + time + ".txt";
+                }
                 addresses.add(fileAddress);
-                FileUtil.saveFile(infoList, fileAddress, keys);
+                FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
 
-                String des = baseDir + name + ".zip";
-                List<String> addressList = new ArrayList<>();
-                addressList.add(fileAddress);
-                FileUtil.compressFile(des, addressList);
+                if (flag == 1) {
+                    String des = baseDir + name + ".zip";
+                    List<String> addressList = new ArrayList<>();
+                    addressList.add(baseDir + name + time + ".txt");
+                    FileUtil.compressFile(des, addressList);
+                } else {
+                    String des = utcDataPath + name + "UTC+8" + ".zip";
+                    List<String> addressList = new ArrayList<>();
+                    addressList.add(utcDataPath + name + "UTC+8" + time + ".txt");
+                    FileUtil.compressFile(des, addressList);
+                }
             } else if (type.equals("jiangsu")) {
                 List<String> keys = new ArrayList<>();
+                List<String> keys_cn = new ArrayList<>();
                 String name = "";
                 for (int i = 0; i < jsonArray.size(); i++) {
                     if (station.equals((jsonArray.getObject(i, JSONObject.class)).getString("name"))) {
                         name = (jsonArray.getObject(i, JSONObject.class)).getString("name_en");
                         keys = (jsonArray.getObject(i, JSONObject.class)).getObject("keys", List.class);
+                        keys_cn = (jsonArray.getObject(i, JSONObject.class)).getObject("keys_cn", List.class);
                     }
                 }
                 List<Map<String, Object>> infoList = jiangsuMapper.getInfoByStationAndTime(station, startTime, endTime);
-                String fileAddress = baseDir + name + time + ".txt";
+                String fileAddress;
+                if (flag == 1) {
+                    fileAddress = baseDir + name + time + ".txt";
+                } else {
+                    fileAddress = utcDataPath + name + "UTC+8" + time + ".txt";
+                }
                 addresses.add(fileAddress);
-                FileUtil.saveFile(infoList, fileAddress, keys);
+                FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
 
-                String des = baseDir + name + ".zip";
-                List<String> addressList = new ArrayList<>();
-                addressList.add(fileAddress);
-                FileUtil.compressFile(des, addressList);
+                if (flag == 1) {
+                    String des = baseDir + name + ".zip";
+                    List<String> addressList = new ArrayList<>();
+                    addressList.add(baseDir + name + time + ".txt");
+                    FileUtil.compressFile(des, addressList);
+                } else {
+                    String des = utcDataPath + name + "UTC+8" + ".zip";
+                    List<String> addressList = new ArrayList<>();
+                    addressList.add(utcDataPath + name + "UTC+8" + time + ".txt");
+                    FileUtil.compressFile(des, addressList);
+                }
             } else if (type.equals("zhejiang")) {
                 List<String> keys = new ArrayList<>();
+                List<String> keys_cn = new ArrayList<>();
                 String name = "";
                 for (int i = 0; i < jsonArray.size(); i++) {
                     if (station.equals((jsonArray.getObject(i, JSONObject.class)).getString("name"))) {
                         name = (jsonArray.getObject(i, JSONObject.class)).getString("name_en");
                         keys = (jsonArray.getObject(i, JSONObject.class)).getObject("keys", List.class);
+                        keys_cn = (jsonArray.getObject(i, JSONObject.class)).getObject("keys_cn", List.class);
                     }
                 }
                 List<Map<String, Object>> infoList = zhejiangMapper.getInfoByStationAndTime(station, startTime, endTime);
-                String fileAddress = baseDir + name + time + ".txt";
+                String fileAddress;
+                if (flag == 1) {
+                    fileAddress = baseDir + name + time + ".txt";
+                } else {
+                    fileAddress = utcDataPath + name + "UTC+8" + time + ".txt";
+                }
                 addresses.add(fileAddress);
-                FileUtil.saveFile(infoList, fileAddress, keys);
+                FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
 
-                String des = baseDir + name + ".zip";
-                List<String> addressList = new ArrayList<>();
-                addressList.add(fileAddress);
-                FileUtil.compressFile(des, addressList);
+                if (flag == 1) {
+                    String des = baseDir + name + ".zip";
+                    List<String> addressList = new ArrayList<>();
+                    addressList.add(baseDir + name + time + ".txt");
+                    FileUtil.compressFile(des, addressList);
+                } else {
+                    String des = utcDataPath + name + "UTC+8" + ".zip";
+                    List<String> addressList = new ArrayList<>();
+                    addressList.add(utcDataPath + name + "UTC+8" + time + ".txt");
+                    FileUtil.compressFile(des, addressList);
+                }
+            } else if (type.equals("hubei")) {
+                List<String> keys = new ArrayList<>();
+                List<String> keys_cn = new ArrayList<>();
+                String name = "";
+                for (int i = 0; i < jsonArray.size(); i++) {
+                    if (station.equals((jsonArray.getObject(i, JSONObject.class)).getString("name"))) {
+                        name = (jsonArray.getObject(i, JSONObject.class)).getString("name_en");
+                        keys = (jsonArray.getObject(i, JSONObject.class)).getObject("keys", List.class);
+                        keys_cn = (jsonArray.getObject(i, JSONObject.class)).getObject("keys_cn", List.class);
+                    }
+                }
+                List<Map<String, Object>> infoList = hubeiMapper.getInfoByStationAndTime(station, startTime, endTime);
+                String fileAddress;
+                if (flag == 1) {
+                    fileAddress = baseDir + name + time + ".txt";
+                } else {
+                    fileAddress = utcDataPath + name + "UTC+8" + time + ".txt";
+                }
+                addresses.add(fileAddress);
+                FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
+
+                if (flag == 1) {
+                    String des = baseDir + name + ".zip";
+                    List<String> addressList = new ArrayList<>();
+                    addressList.add(baseDir + name + time + ".txt");
+                    FileUtil.compressFile(des, addressList);
+                } else {
+                    String des = utcDataPath + name + "UTC+8" + ".zip";
+                    List<String> addressList = new ArrayList<>();
+                    addressList.add(utcDataPath + name + "UTC+8" + time + ".txt");
+                    FileUtil.compressFile(des, addressList);
+                }
             } else {
                 throw new MyException(ResultEnum.QUERY_TYPE_ERROR);
             }
 
-            String destination = baseDir + "all.zip";
-            FileUtil.compressFile(destination, addresses);
+            if (flag == 1) {
+                String destination = baseDir + "all.zip";
+                FileUtil.compressFile(destination, addresses);
+            } else {
+                String destination = utcDataPath + "allUTC+8.zip";
+                FileUtil.compressFile(destination, addresses);
+            }
         } catch (Exception e) {
             throw new MyException(ResultEnum.QUERY_TYPE_ERROR);
         }

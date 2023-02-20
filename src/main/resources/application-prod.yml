@@ -10,6 +10,8 @@ python:
   python
 basedir:
   C:/water_level_data/data/
+data-path:
+  C:/water_level_data/utc+8_data/
 waterleveldb:
   C:/water_level_data/water_level.db
 stationnamejson:
@@ -17,6 +19,9 @@ stationnamejson:
 
 waterlevellog:
   C:/water_level_data/yangtze_downstream_log.txt
+yangtzeDownstreamStationJson:
+  C:/water_level_data/yangtze_downstream_station.json
+
 
 zhejianglog:
   C:/water_level_data/zhejiang_log.txt
@@ -36,5 +41,10 @@ jiangsujson:
   C:/water_level_data/jiangsu_station.json
 pngpath:
   C:/water_level_data/png/
+
+hubeiLog:
+  C:/water_level_data/hubei_log.txt
+hubeiJson:
+  C:/water_level_data/hubei_station.json
 
 

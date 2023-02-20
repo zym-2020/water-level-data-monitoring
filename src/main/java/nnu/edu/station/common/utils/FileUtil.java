@@ -30,6 +30,7 @@ public class FileUtil {
             }
             zipFile.addFiles(files);
         } catch (Exception e) {
+            System.out.println(e);
             throw new MyException(ResultEnum.DEFAULT_EXCEPTION);
         }
     }
@@ -75,7 +76,7 @@ public class FileUtil {
     * @Author: Yiming
     * @Date: 2023/2/13
     */
-    public static void saveFile(List<Map<String, Object>> list, String address, List<String> keys) {
+    public static void saveFile(List<Map<String, Object>> list, String address, List<String> keys, List<String> keys_cn) {
         try {
             FileWriter fileWriter = new FileWriter(address);
             for (Map<String, Object> map : list) {
@@ -86,6 +87,11 @@ public class FileUtil {
                 str += "\n";
                 fileWriter.write(str);
             }
+            String temp = "";
+            for (String s : keys_cn) {
+                temp += s + "\t";
+            }
+            fileWriter.write(temp);
             fileWriter.close();
 
         } catch (Exception e) {

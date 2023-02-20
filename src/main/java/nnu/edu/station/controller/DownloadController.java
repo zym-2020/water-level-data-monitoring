@@ -22,23 +22,43 @@ public class DownloadController {
     @Autowired
     DownloadService downloadService;
 
-    @RequestMapping(value = "/downloadOne/{fileName}", method = RequestMethod.GET)
+    @RequestMapping(value = "/downloadOne1/{fileName}", method = RequestMethod.GET)
     public void downloadOne(@PathVariable String fileName, HttpServletResponse response) {
-        downloadService.downloadOne(fileName, response);
+        downloadService.downloadOne(fileName, response, 1);
     }
 
-    @RequestMapping(value = "/downloadAll", method = RequestMethod.GET)
+    @RequestMapping(value = "/downloadAll1", method = RequestMethod.GET)
     public void downloadAll(HttpServletResponse response) {
-        downloadService.downloadAll(response);
+        downloadService.downloadAll(response, 1);
     }
 
-    @RequestMapping(value = "/downloadByStationAndTime/{station}/{startTime}/{endTime}", method = RequestMethod.GET)
+    @RequestMapping(value = "/downloadByStationAndTime1/{station}/{startTime}/{endTime}", method = RequestMethod.GET)
     public void downloadByStationAndTime(@PathVariable String station, @PathVariable String startTime, @PathVariable String endTime, HttpServletResponse response) {
-        downloadService.downloadByStationAndTime(station, startTime, endTime, response);
+        downloadService.downloadByStationAndTime(station, startTime, endTime, response, 1);
     }
 
-    @RequestMapping(value = "/downloadAllByStation/{station}", method = RequestMethod.GET)
+    @RequestMapping(value = "/downloadAllByStation1/{station}", method = RequestMethod.GET)
     public void downloadAllByStation(@PathVariable String station, HttpServletResponse response) {
-        downloadService.downloadAllByStation(station, response);
+        downloadService.downloadAllByStation(station, response, 1);
+    }
+
+    @RequestMapping(value = "/downloadOne2/{fileName}", method = RequestMethod.GET)
+    public void downloadOne2(@PathVariable String fileName, HttpServletResponse response) {
+        downloadService.downloadOne(fileName, response, 2);
+    }
+
+    @RequestMapping(value = "/downloadAll2", method = RequestMethod.GET)
+    public void downloadAll2(HttpServletResponse response) {
+        downloadService.downloadAll(response, 2);
+    }
+
+    @RequestMapping(value = "/downloadByStationAndTime2/{station}/{startTime}/{endTime}", method = RequestMethod.GET)
+    public void downloadByStationAndTime2(@PathVariable String station, @PathVariable String startTime, @PathVariable String endTime, HttpServletResponse response) {
+        downloadService.downloadByStationAndTime(station, startTime, endTime, response, 2);
+    }
+
+    @RequestMapping(value = "/downloadAllByStation2/{station}", method = RequestMethod.GET)
+    public void downloadAllByStation2(@PathVariable String station, HttpServletResponse response) {
+        downloadService.downloadAllByStation(station, response, 2);
     }
 }

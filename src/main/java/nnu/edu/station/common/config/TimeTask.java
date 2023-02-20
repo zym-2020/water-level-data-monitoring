@@ -7,10 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import nnu.edu.station.common.exception.MyException;
 import nnu.edu.station.common.result.ResultEnum;
 import nnu.edu.station.common.utils.FileUtil;
-import nnu.edu.station.dao.level.AnhuiMapper;
-import nnu.edu.station.dao.level.JiangsuMapper;
-import nnu.edu.station.dao.level.YangtzeDownstreamMapper;
-import nnu.edu.station.dao.level.ZhejiangMapper;
+import nnu.edu.station.dao.level.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -45,6 +42,9 @@ public class TimeTask {
     @Value("${waterlevellog}")
     String waterLevelLog;
 
+    @Value("${yangtzeDownstreamStationJson}")
+    String yangtzeDownstreamStationJson;
+
     @Value("${basedir}")
     String baseDir;
 
@@ -75,6 +75,15 @@ public class TimeTask {
     @Value("${stationnamejson}")
     String stationNameJson;
 
+    @Value("${hubeiLog}")
+    String hubeiLog;
+
+    @Value("${hubeiJson}")
+    String hubeiJson;
+
+    @Value("${data-path}")
+    String utcDataPath;
+
     @Autowired
     YangtzeDownstreamMapper yangtzeDownstreamMapper;
 
@@ -87,6 +96,9 @@ public class TimeTask {
     @Autowired
     AnhuiMapper anhuiMapper;
 
+    @Autowired
+    HubeiMapper hubeiMapper;
+
 
     @Scheduled(cron = "0 30,55 * * * ?")
     public void executePython() {
@@ -98,13 +110,11 @@ public class TimeTask {
             */
             ProcessBuilder processBuilder = new ProcessBuilder();
             List<String> commands = new ArrayList<>();
-            commands.add(python);
-            commands.add(pythonDir + "cjh.py");
-            commands.add(waterLevelDb);
-            commands.add(waterLevelLog);
+            commands.add("cmd");
+            commands.add("/c");
+            commands.add(python + " " + pythonDir + "yangtze_downstream.py " + yangtzeDownstreamStationJson + " " + waterLevelDb + " " + waterLevelLog);
             processBuilder.command(commands);
             processBuilder.start();
-
         } catch (Exception e) {
             log.error(e.getMessage());
         }
@@ -179,6 +189,26 @@ public class TimeTask {
         }
     }
 
+    @Scheduled(cron = "0 30 * * * ?")
+    public void executePythonHubei() {
+        try {
+            /**
+             * @Description:湖北水情网定时任务
+             * @Author: Yiming
+             * @Date: 2023/2/8
+             */
+            ProcessBuilder processBuilder = new ProcessBuilder();
+            List<String> commands = new ArrayList<>();
+            commands.add("cmd");
+            commands.add("/c");
+            commands.add(python + " " + pythonDir + "hubei.py " + hubeiJson + " " + waterLevelDb + " " + hubeiLog);
+            processBuilder.command(commands);
+            processBuilder.start();
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+    }
+
     @Scheduled(cron = "0 30 8 * * ?")
     public void executeSaveText() {
         Date date = new Date();
@@ -194,7 +224,7 @@ public class TimeTask {
         List<String> addresses = new ArrayList<>();
 
         /**
-        * @Description:
+        * @Description:长江下游水情
         * @Author: Yiming
         * @Date: 2023/2/13
         */
@@ -202,16 +232,18 @@ public class TimeTask {
         for (String station : downstreamStationList) {
             String name = "";
             List<String> keys = new ArrayList<>();
+            List<String> keys_cn = new ArrayList<>();
             for (int i = 0; i < jsonArray.size(); i++) {
                 if (station.equals((jsonArray.getObject(i, JSONObject.class)).getString("name"))) {
                     name = (jsonArray.getObject(i, JSONObject.class)).getString("name_en");
                     keys = (jsonArray.getObject(i, JSONObject.class)).getObject("keys", List.class);
+                    keys_cn = (jsonArray.getObject(i, JSONObject.class)).getObject("keys_cn", List.class);
                 }
             }
             List<Map<String, Object>> infoList = yangtzeDownstreamMapper.getInfoByStationAndTimeAsc(station, startTime, endTime);
             String fileAddress = baseDir + name + day + ".txt";
             addresses.add(fileAddress);
-            FileUtil.saveFile(infoList, fileAddress, keys);
+            FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
         }
 
         /**
@@ -223,16 +255,18 @@ public class TimeTask {
         for(String station : stationList) {
             String name = "";
             List<String> keys = new ArrayList<>();
+            List<String> keys_cn = new ArrayList<>();
             for (int i = 0; i < jsonArray.size(); i++) {
                 if (station.equals((jsonArray.getObject(i, JSONObject.class)).getString("name"))) {
                     name = (jsonArray.getObject(i, JSONObject.class)).getString("name_en");
                     keys = (jsonArray.getObject(i, JSONObject.class)).getObject("keys", List.class);
+                    keys_cn = (jsonArray.getObject(i, JSONObject.class)).getObject("keys_cn", List.class);
                 }
             }
             List<Map<String, Object>> infoList = jiangsuMapper.getInfoByStationAndTime(station, startTime, endTime);
             String fileAddress = baseDir + name + day + ".txt";
             addresses.add(fileAddress);
-            FileUtil.saveFile(infoList, fileAddress, keys);
+            FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
         }
 
         /**
@@ -244,16 +278,18 @@ public class TimeTask {
         for(String station : zjStationList) {
             String name = "";
             List<String> keys = new ArrayList<>();
+            List<String> keys_cn = new ArrayList<>();
             for (int i = 0; i < jsonArray.size(); i++) {
                 if (station.equals((jsonArray.getObject(i, JSONObject.class)).getString("name"))) {
                     name = (jsonArray.getObject(i, JSONObject.class)).getString("name_en");
                     keys = (jsonArray.getObject(i, JSONObject.class)).getObject("keys", List.class);
+                    keys_cn = (jsonArray.getObject(i, JSONObject.class)).getObject("keys_cn", List.class);
                 }
             }
             List<Map<String, Object>> infoList = zhejiangMapper.getInfoByStationAndTime(station, startTime, endTime);
             String fileAddress = baseDir + name + day + ".txt";
             addresses.add(fileAddress);
-            FileUtil.saveFile(infoList, fileAddress, keys);
+            FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
         }
 
         /**
@@ -265,16 +301,41 @@ public class TimeTask {
         for(String station : ahStationList) {
             String name = "";
             List<String> keys = new ArrayList<>();
+            List<String> keys_cn = new ArrayList<>();
             for (int i = 0; i < jsonArray.size(); i++) {
                 if (station.equals((jsonArray.getObject(i, JSONObject.class)).getString("name"))) {
                     name = (jsonArray.getObject(i, JSONObject.class)).getString("name_en");
                     keys = (jsonArray.getObject(i, JSONObject.class)).getObject("keys", List.class);
+                    keys_cn = (jsonArray.getObject(i, JSONObject.class)).getObject("keys_cn", List.class);
                 }
             }
             List<Map<String, Object>> infoList = anhuiMapper.getInfoByStationAndTime(station, startTime, endTime);
             String fileAddress = baseDir + name + day + ".txt";
             addresses.add(fileAddress);
-            FileUtil.saveFile(infoList, fileAddress, keys);
+            FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
+        }
+
+        /**
+         * @Description:湖北文件保存
+         * @Author: Yiming
+         * @Date: 2023/2/19
+         */
+        List<String> hbStationList = hubeiMapper.getStationName();
+        for(String station : hbStationList) {
+            String name = "";
+            List<String> keys = new ArrayList<>();
+            List<String> keys_cn = new ArrayList<>();
+            for (int i = 0; i < jsonArray.size(); i++) {
+                if (station.equals((jsonArray.getObject(i, JSONObject.class)).getString("name"))) {
+                    name = (jsonArray.getObject(i, JSONObject.class)).getString("name_en");
+                    keys = (jsonArray.getObject(i, JSONObject.class)).getObject("keys", List.class);
+                    keys_cn = (jsonArray.getObject(i, JSONObject.class)).getObject("keys_cn", List.class);
+                }
+            }
+            List<Map<String, Object>> infoList = hubeiMapper.getInfoByStationAndTime(station, startTime, endTime);
+            String fileAddress = baseDir + name + day + ".txt";
+            addresses.add(fileAddress);
+            FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
         }
 
 
@@ -289,5 +350,147 @@ public class TimeTask {
         FileUtil.compressFile(destination, addresses);
     }
 
+
+    @Scheduled(cron = "0 30 0 * * ?")
+    public void executeSaveText2() {
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        cal.setTime(date);
+        String day = format.format(cal.getTime());
+        cal.add(Calendar.DATE, -1);
+        String endTime = format.format(cal.getTime()) + " 23:59:00";
+        String startTime = format.format(cal.getTime()) + " 00:00:00";
+
+        JSONArray jsonArray = FileUtil.readJsonArrayFile(stationNameJson);
+        List<String> addresses = new ArrayList<>();
+
+        /**
+         * @Description:长江下游水情
+         * @Author: Yiming
+         * @Date: 2023/2/13
+         */
+        List<String> downstreamStationList = yangtzeDownstreamMapper.getStationName();
+        for (String station : downstreamStationList) {
+            String name = "";
+            List<String> keys = new ArrayList<>();
+            List<String> keys_cn = new ArrayList<>();
+            for (int i = 0; i < jsonArray.size(); i++) {
+                if (station.equals((jsonArray.getObject(i, JSONObject.class)).getString("name"))) {
+                    name = (jsonArray.getObject(i, JSONObject.class)).getString("name_en");
+                    keys = (jsonArray.getObject(i, JSONObject.class)).getObject("keys", List.class);
+                    keys_cn = (jsonArray.getObject(i, JSONObject.class)).getObject("keys_cn", List.class);
+                }
+            }
+            List<Map<String, Object>> infoList = yangtzeDownstreamMapper.getInfoByStationAndTimeAsc(station, startTime, endTime);
+            String fileAddress = utcDataPath + name + "UTC+8" + day + ".txt";
+            addresses.add(fileAddress);
+            FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
+        }
+
+        /**
+         * @Description:江苏文件保存
+         * @Author: Yiming
+         * @Date: 2023/2/11
+         */
+        List<String> stationList = jiangsuMapper.getStationName();
+        for(String station : stationList) {
+            String name = "";
+            List<String> keys = new ArrayList<>();
+            List<String> keys_cn = new ArrayList<>();
+            for (int i = 0; i < jsonArray.size(); i++) {
+                if (station.equals((jsonArray.getObject(i, JSONObject.class)).getString("name"))) {
+                    name = (jsonArray.getObject(i, JSONObject.class)).getString("name_en");
+                    keys = (jsonArray.getObject(i, JSONObject.class)).getObject("keys", List.class);
+                    keys_cn = (jsonArray.getObject(i, JSONObject.class)).getObject("keys_cn", List.class);
+                }
+            }
+            List<Map<String, Object>> infoList = jiangsuMapper.getInfoByStationAndTime(station, startTime, endTime);
+            String fileAddress = utcDataPath + name + "UTC+8" + day + ".txt";
+            addresses.add(fileAddress);
+            FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
+        }
+
+        /**
+         * @Description:浙江文件保存
+         * @Author: Yiming
+         * @Date: 2023/2/12
+         */
+        List<String> zjStationList = zhejiangMapper.getStationName();
+        for(String station : zjStationList) {
+            String name = "";
+            List<String> keys = new ArrayList<>();
+            List<String> keys_cn = new ArrayList<>();
+            for (int i = 0; i < jsonArray.size(); i++) {
+                if (station.equals((jsonArray.getObject(i, JSONObject.class)).getString("name"))) {
+                    name = (jsonArray.getObject(i, JSONObject.class)).getString("name_en");
+                    keys = (jsonArray.getObject(i, JSONObject.class)).getObject("keys", List.class);
+                    keys_cn = (jsonArray.getObject(i, JSONObject.class)).getObject("keys_cn", List.class);
+                }
+            }
+            List<Map<String, Object>> infoList = zhejiangMapper.getInfoByStationAndTime(station, startTime, endTime);
+            String fileAddress = utcDataPath + name + "UTC+8" + day + ".txt";
+            addresses.add(fileAddress);
+            FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
+        }
+
+        /**
+         * @Description:安徽文件保存
+         * @Author: Yiming
+         * @Date: 2023/2/12
+         */
+        List<String> ahStationList = anhuiMapper.getStationName();
+        for(String station : ahStationList) {
+            String name = "";
+            List<String> keys = new ArrayList<>();
+            List<String> keys_cn = new ArrayList<>();
+            for (int i = 0; i < jsonArray.size(); i++) {
+                if (station.equals((jsonArray.getObject(i, JSONObject.class)).getString("name"))) {
+                    name = (jsonArray.getObject(i, JSONObject.class)).getString("name_en");
+                    keys = (jsonArray.getObject(i, JSONObject.class)).getObject("keys", List.class);
+                    keys_cn = (jsonArray.getObject(i, JSONObject.class)).getObject("keys_cn", List.class);
+                }
+            }
+            List<Map<String, Object>> infoList = anhuiMapper.getInfoByStationAndTime(station, startTime, endTime);
+            String fileAddress = utcDataPath + name + "UTC+8" + day + ".txt";
+            addresses.add(fileAddress);
+            FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
+        }
+
+        /**
+        * @Description:湖北文件保存
+        * @Author: Yiming
+        * @Date: 2023/2/19
+        */
+        List<String> hbStationList = hubeiMapper.getStationName();
+        for(String station : hbStationList) {
+            String name = "";
+            List<String> keys = new ArrayList<>();
+            List<String> keys_cn = new ArrayList<>();
+            for (int i = 0; i < jsonArray.size(); i++) {
+                if (station.equals((jsonArray.getObject(i, JSONObject.class)).getString("name"))) {
+                    name = (jsonArray.getObject(i, JSONObject.class)).getString("name_en");
+                    keys = (jsonArray.getObject(i, JSONObject.class)).getObject("keys", List.class);
+                    keys_cn = (jsonArray.getObject(i, JSONObject.class)).getObject("keys_cn", List.class);
+                }
+            }
+            List<Map<String, Object>> infoList = hubeiMapper.getInfoByStationAndTime(station, startTime, endTime);
+            String fileAddress = utcDataPath + name + "UTC+8" + day + ".txt";
+            addresses.add(fileAddress);
+            FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
+        }
+
+
+
+        for(int i = 0; i < jsonArray.size(); i++) {
+            String des = utcDataPath + jsonArray.getJSONObject(i).getString("name_en") + "UTC+8" + ".zip";
+            List<String> addressList = new ArrayList<>();
+            addressList.add(utcDataPath + jsonArray.getJSONObject(i).getString("name_en") + "UTC+8" + day + ".txt");
+            FileUtil.compressFile(des, addressList);
+        }
+
+        String destination = utcDataPath + "allUTC+8.zip";
+        FileUtil.compressFile(destination, addresses);
+    }
 
 }

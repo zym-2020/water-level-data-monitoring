@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServletResponse;
  * @Description:
  */
 public interface DownloadService {
-    void downloadOne(String fileName, HttpServletResponse response);
+    void downloadOne(String fileName, HttpServletResponse response, int flag);
 
-    void downloadAll(HttpServletResponse response);
+    void downloadAll(HttpServletResponse response, int flag);
 
-    void downloadByStationAndTime(String station, String startTime, String endTime, HttpServletResponse response);
+    void downloadByStationAndTime(String station, String startTime, String endTime, HttpServletResponse response, int flag);
 
-    void downloadAllByStation(String station, HttpServletResponse response);
+    void downloadAllByStation(String station, HttpServletResponse response, int flag);
 }

@@ -36,14 +36,14 @@ const dateFormat = (date, format) => {
 };
 
 // 插入数据库
-const insertData = (dbpath, list, stationName) => {
+const insertData = (dbpath, waterLevelList, flowList, stationName) => {
   const db = new sqlite.Database(dbpath, (err) => {
     if (err) throw err;
   });
-  for (let i = 0; i < list.length; i++) {
+  for (let i = 0; i < waterLevelList.length; i++) {
     db.all(
       `select * from anhui_station where time = '${
-        list[i].TM + ":00"
+        waterLevelList[i].TM + ":00"
       }' and station = '${stationName}'`,
       (err, row) => {
         if (err) throw err;
@@ -51,8 +51,39 @@ const insertData = (dbpath, list, stationName) => {
           if (row.length == 0) {
             db.run(
               `insert into anhui_station values('${
-                list[i].TM + ":00"
-              }', '${stationName}', ${list[i].Z})`,
+                waterLevelList[i].TM + ":00"
+              }', '${stationName}', ${waterLevelList[i].Z}, null)`,
+              (err) => {
+                if (err) throw err;
+              }
+            );
+          }
+        }
+      }
+    );
+  }
+  for (let i = 0; i < flowList.length; i++) {
+    db.all(
+      `select * from anhui_station where time = '${
+        flowList[i].TM + ":00"
+      }' and station = '${stationName}'`,
+      (err, row) => {
+        if (err) throw err;
+        else {
+          if (row.length == 0) {
+            db.run(
+              `insert into anhui_station values('${
+                flowList[i].TM + ":00"
+              }', '${stationName}', null, ${flowList[i].Q})`,
+              (err) => {
+                if (err) throw err;
+              }
+            );
+          } else {
+            db.run(
+              `update anhui_station set flow = ${flowList[i].Q} where time = '${
+                flowList[i].TM + ":00"
+              }' and station = '${stationName}'`,
               (err) => {
                 if (err) throw err;
               }
@@ -74,10 +105,14 @@ const getInfo = (dbpath, formData, stationName) => {
     },
     async (err, res, body) => {
       if (!err && res.statusCode == 200) {
-        const result = JSON.parse(
+        const waterLevelList = JSON.parse(
           waterSecurity.decode(JSON.parse(body).data)
         ).data_sw;
-        insertData(dbpath, result, stationName);
+        const flowList = JSON.parse(
+          waterSecurity.decode(JSON.parse(body).data)
+        ).data_q;
+
+        insertData(dbpath, waterLevelList, flowList, stationName);
       }
     }
   );
@@ -110,3 +145,4 @@ try {
 } catch (e) {
   fs.writeFile(param[4], e, () => {});
 }
+

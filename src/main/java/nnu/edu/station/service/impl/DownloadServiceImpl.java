@@ -33,9 +33,18 @@ public class DownloadServiceImpl implements DownloadService {
     @Value("${basedir}")
     String basedir;
 
+    @Value("${data-path}")
+    String utcDataPath;
+
     @Override
-    public void downloadOne(String fileName, HttpServletResponse response) {
-        File file = new File(basedir + fileName);
+    public void downloadOne(String fileName, HttpServletResponse response, int flag) {
+        String path = "";
+        if (flag == 1) {
+            path = basedir + fileName;
+        } else {
+            path = utcDataPath + fileName;
+        }
+        File file = new File(path);
         if (!file.exists()) {
             throw new MyException(ResultEnum.NO_OBJECT);
         }
@@ -60,8 +69,14 @@ public class DownloadServiceImpl implements DownloadService {
     }
 
     @Override
-    public void downloadAll(HttpServletResponse response) {
-        File file = new File(basedir + "all.zip");
+    public void downloadAll(HttpServletResponse response, int flag) {
+        String path = "";
+        if (flag == 1) {
+            path = basedir + "all.zip";
+        } else {
+            path = utcDataPath + "all.zip";
+        }
+        File file = new File(path);
         if (!file.exists()) {
             throw new MyException(ResultEnum.NO_OBJECT);
         }
@@ -86,7 +101,7 @@ public class DownloadServiceImpl implements DownloadService {
     }
 
     @Override
-    public void downloadByStationAndTime(String station, String startTime, String endTime, HttpServletResponse response) {
+    public void downloadByStationAndTime(String station, String startTime, String endTime, HttpServletResponse response, int flag) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
             List<String> addresses = new ArrayList<>();
@@ -95,7 +110,13 @@ public class DownloadServiceImpl implements DownloadService {
             Calendar cal = Calendar.getInstance();
             cal.setTime(startDate);
             while (startDate.getTime() <= endDate.getTime()) {
-                File file = new File(basedir + station + sdf.format(startDate.getTime()) + ".txt");
+                String path = "";
+                if (flag == 1) {
+                    path = basedir + station + sdf.format(startDate.getTime()) + ".txt";
+                } else {
+                    path = utcDataPath + station + "UTC+8" + sdf.format(startDate.getTime()) + ".txt";
+                }
+                File file = new File(path);
                 if (file.exists()) {
                     addresses.add(basedir + station + sdf.format(startDate.getTime()) + ".txt");
                 }
@@ -126,8 +147,14 @@ public class DownloadServiceImpl implements DownloadService {
     }
 
     @Override
-    public void downloadAllByStation(String station, HttpServletResponse response) {
-        File file = new File(basedir + station + ".zip");
+    public void downloadAllByStation(String station, HttpServletResponse response, int flag) {
+        String path = "";
+        if (flag == 1) {
+            path = basedir + station + ".zip";
+        } else {
+            path = utcDataPath + station + "UTC+8" + ".zip";
+        }
+        File file = new File(path);
         if (!file.exists()) {
             throw new MyException(ResultEnum.NO_OBJECT);
         }

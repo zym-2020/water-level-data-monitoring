@@ -4,8 +4,8 @@
         "stcd": "62904320",
         "zxstcd": "",
         "sttp": "DD",
-        "zxsttp": "ZZ",
-        "name": "GetSwLineAndZX"
+        "zxsttp": "",
+        "name": "GetSwLineMap"
     },
     {
         "station": "芜湖",
@@ -18,6 +18,118 @@
     {
         "station": "马鞍山",
         "stcd": "60115800",
+        "zxstcd": "",
+        "sttp": "ZZ",
+        "zxsttp": "",
+        "name": "GetSwLineMap"
+    },
+    {
+        "station": "横港",
+        "stcd": "62723100",
+        "zxstcd": "",
+        "sttp": "ZZ",
+        "zxsttp": "",
+        "name": "GetSwLineMap"
+    },
+    {
+        "station": "梳妆台闸上",
+        "stcd": "62700750",
+        "zxstcd": "",
+        "sttp": "DD",
+        "zxsttp": "",
+        "name": "GetSwLineMap"
+    },
+    {
+        "station": "梳妆台闸下",
+        "stcd": "62700751",
+        "zxstcd": "",
+        "sttp": "ZZ",
+        "zxsttp": "",
+        "name": "GetSwLineMap"
+    },
+    {
+        "station": "凤凰颈闸上",
+        "stcd": "62904400",
+        "zxstcd": "",
+        "sttp": "DD",
+        "zxsttp": "",
+        "name": "GetSwLineMap"
+    },
+    {
+        "station": "凤凰颈闸下",
+        "stcd": "62904500",
+        "zxstcd": "",
+        "sttp": "ZZ",
+        "zxsttp": "",
+        "name": "GetSwLineMap"
+    },
+    {
+        "station": "凤凰颈站下",
+        "stcd": "62904321",
+        "zxstcd": "",
+        "sttp": "ZQ",
+        "zxsttp": "",
+        "name": "GetSwLineMap"
+    },
+    {
+        "station": "坝埂头",
+        "stcd": "60115200",
+        "zxstcd": "",
+        "sttp": "ZZ",
+        "zxsttp": "",
+        "name": "GetSwLineMap"
+    },
+    {
+        "station": "裕溪闸上",
+        "stcd": "62900600",
+        "zxstcd": "",
+        "sttp": "DD",
+        "zxsttp": "",
+        "name": "GetSwLineMap"
+    },
+    {
+        "station": "裕溪闸下",
+        "stcd": "62900700",
+        "zxstcd": "",
+        "sttp": "ZZ",
+        "zxsttp": "",
+        "name": "GetSwLineMap"
+    },
+    {
+        "station": "当涂",
+        "stcd": "62912000",
+        "zxstcd": "",
+        "sttp": "ZQ",
+        "zxsttp": "",
+        "name": "GetSwLineMap"
+    },
+    {
+        "station": "乌江闸上",
+        "stcd": "62915200",
+        "zxstcd": "",
+        "sttp": "DD",
+        "zxsttp": "",
+        "name": "GetSwLineMap"
+    },
+    {
+        "station": "乌江闸下",
+        "stcd": "62915300",
+        "zxstcd": "",
+        "sttp": "ZZ",
+        "zxsttp": "",
+        "name": "GetSwLineMap"
+    },
+    {
+        "station": "新桥闸上",
+        "stcd": "62905100",
+        "zxstcd": "",
+        "sttp": "DD",
+        "zxsttp": "",
+        "name": "GetSwLineMap"
+    },
+    {
+        "station": "新桥闸下",
+        "stcd": "62905200",
         "zxstcd": "",
         "sttp": "ZZ",
         "zxsttp": "",

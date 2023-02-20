@@ -3,130 +3,390 @@
 		"name": "九江",
 		"name_en": "jiujiang",
 		"keys": ["flow", "waterLevel"]
+		"keys_cn": ["流量", "水位"]
 	},
 	{
 		"name": "大通",
 		"name_en": "datong",
-		"keys": ["flow", "waterLevel"]
+		"keys": ["flow", "waterLevel"],
+		"keys_cn": ["流量", "水位"]
 	},
 	{
 		"name": "镇江",
 		"name_en": "zhenjiang",
-		"keys": ["waterLevel"]
+		"keys": ["upstreamWaterLevel", "downstreamWaterLevel", "flow"],
+		"keys_cn": ["上游水位", "下游水位", "流量"]
 	},
 	{
 		"name": "南京",
 		"name_en": "nanjing",
-		"keys": ["waterLevel"]
+		"keys": ["upstreamWaterLevel", "downstreamWaterLevel", "flow"],
+		"keys_cn": ["上游水位", "下游水位", "流量"]
 	},
 	{
 		"name": "江阴",
 		"name_en": "jiangyin",
-		"keys": ["waterLevel"]
+		"keys": ["upstreamWaterLevel", "downstreamWaterLevel", "flow"],
+		"keys_cn": ["上游水位", "下游水位", "流量"]
 	},
 	{
 		"name": "天生港",
 		"name_en": "tianshenggang",
-		"keys": ["waterLevel"]
+		"keys": ["upstreamWaterLevel", "downstreamWaterLevel", "flow"],
+		"keys_cn": ["上游水位", "下游水位", "流量"]
 	},
 	{
 		"name": "徐六泾",
 		"name_en": "xuliujing",
-		"keys": ["waterLevel"]
+		"keys": ["upstreamWaterLevel", "downstreamWaterLevel", "flow"],
+		"keys_cn": ["上游水位", "下游水位", "流量"]
 	},
 	{
 		"name": "吴淞",
 		"name_en": "wusong",
-		"keys": ["waterLevel"]
+		"keys": ["upstreamWaterLevel", "downstreamWaterLevel", "flow"],
+		"keys_cn": ["上游水位", "下游水位", "流量"]
 	},
 	{
 		"name": "燕尾港",
 		"name_en": "yanweigang",
-		"keys": ["waterLevel"]
+		"keys": ["upstreamWaterLevel", "downstreamWaterLevel", "flow"],
+		"keys_cn": ["上游水位", "下游水位", "流量"]
 	},
 	{
 		"name": "滨海闸",
 		"name_en": "binhaizha",
-		"keys": ["waterLevel"]
+		"keys": ["upstreamWaterLevel", "downstreamWaterLevel", "flow"],
+		"keys_cn": ["上游水位", "下游水位", "流量"]
 	},
 	{
 		"name": "新洋港闸",
 		"name_en": "xinyanggangzha",
-		"keys": ["waterLevel"]
+		"keys": ["upstreamWaterLevel", "downstreamWaterLevel", "flow"],
+		"keys_cn": ["上游水位", "下游水位", "流量"]
 	},
 	{
 		"name": "小洋口闸",
 		"name_en": "xiaoyangkouzha",
-		"keys": ["waterLevel"]
+		"keys": ["upstreamWaterLevel", "downstreamWaterLevel", "flow"],
+		"keys_cn": ["上游水位", "下游水位", "流量"]
 	},
 	{
 		"name": "掘港",
 		"name_en": "juegang",
-		"keys": ["waterLevel"]
+		"keys": ["upstreamWaterLevel", "downstreamWaterLevel", "flow"],
+		"keys_cn": ["上游水位", "下游水位", "流量"]
 	},
 	{
 		"name": "凤凰颈站",
 		"name_en": "fenghuangjingzhan",
-		"keys": ["waterLevel"]
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
 	},
 	{
 		"name": "芜湖",
 		"name_en": "wuhu",
-		"keys": ["waterLevel"]
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
 	},
 	{
 		"name": "马鞍山",
 		"name_en": "maanshan",
-		"keys": ["waterLevel"]
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
 	},
 	{
 		"name": "岱山",
 		"name_en": "daishan",
-		"keys": ["waterLevel"]
+		"keys": ["rainfall", "waterLevel", "input", "output"],
+		"keys_cn": ["雨量", "水位", "人工入库流量", "人工出库流量"]
 	},
 	{
 		"name": "泗礁",
 		"name_en": "sijiao",
-		"keys": ["waterLevel"]
+		"keys": ["rainfall", "waterLevel", "input", "output"],
+		"keys_cn": ["雨量", "水位", "人工入库流量", "人工出库流量"]
 	},
 	{
 		"name": "定海",
 		"name_en": "dinghai",
-		"keys": ["waterLevel"]
+		"keys": ["rainfall", "waterLevel", "input", "output"],
+		"keys_cn": ["雨量", "水位", "人工入库流量", "人工出库流量"]
 	},
 	{
 		"name": "衢山",
 		"name_en": "qushan",
-		"keys": ["waterLevel"]
+		"keys": ["rainfall", "waterLevel", "input", "output"],
+		"keys_cn": ["雨量", "水位", "人工入库流量", "人工出库流量"]
 	},
 	{
 		"name": "盐官",
 		"name_en": "yanguan",
-		"keys": ["waterLevel"]
+		"keys": ["rainfall", "waterLevel", "input", "output"],
+		"keys_cn": ["雨量", "水位", "人工入库流量", "人工出库流量"]
 	},
 	{
 		"name": "澉浦",
 		"name_en": "ganpu",
-		"keys": ["waterLevel"]
+		"keys": ["rainfall", "waterLevel", "input", "output"],
+		"keys_cn": ["雨量", "水位", "人工入库流量", "人工出库流量"]
 	},
 	{
 		"name": "闸口",
 		"name_en": "zhakou",
-		"keys": ["waterLevel"]
+		"keys": ["rainfall", "waterLevel", "input", "output"],
+		"keys_cn": ["雨量", "水位", "人工入库流量", "人工出库流量"]
 	},
 	{
 		"name": "仓前",
 		"name_en": "cangqian",
-		"keys": ["waterLevel"]
+		"keys": ["rainfall", "waterLevel", "input", "output"],
+		"keys_cn": ["雨量", "水位", "人工入库流量", "人工出库流量"]
 	},
 	{
 		"name": "桐庐",
 		"name_en": "tonglu",
-		"keys": ["waterLevel"]
+		"keys": ["rainfall", "waterLevel", "input", "output"],
+		"keys_cn": ["雨量", "水位", "人工入库流量", "人工出库流量"]
 	},
 	{
 		"name": "富春江水库",
 		"name_en": "fuchunjiangshuiku",
-		"keys": ["waterLevel", "output"]
+		"keys": ["rainfall", "waterLevel", "input", "output"],
+		"keys_cn": ["雨量", "水位", "人工入库流量", "人工出库流量"]
+	},
+	{
+		"name": "汉口",
+		"name_en": "hankou",
+		"keys": ["flow", "waterLevel"]
+		"keys_cn": ["流量", "水位"]
+	},
+	{
+		"name": "八里江",
+		"name_en": "balijiang",
+		"keys": ["flow", "waterLevel"]
+		"keys_cn": ["流量", "水位"]
+	},
+	{
+		"name": "彭泽",
+		"name_en": "pengze",
+		"keys": ["flow", "waterLevel"]
+		"keys_cn": ["流量", "水位"]
+	},
+	{
+		"name": "安庆",
+		"name_en": "anqing",
+		"keys": ["flow", "waterLevel"]
+		"keys_cn": ["流量", "水位"]
+	},
+	{
+		"name": "四号码头",
+		"name_en": "sihaomatou",
+		"keys": ["flow", "waterLevel"]
+		"keys_cn": ["流量", "水位"]
+	},
+	{
+		"name": "南京水文站",
+		"name_en": "nanjingshuiwenzhan",
+		"keys": ["flow", "waterLevel"]
+		"keys_cn": ["流量", "水位"]
+	},
+	{
+		"name": "常熟泵站",
+		"name_en": "changshubengzhan",
+		"keys": ["upstreamWaterLevel", "downstreamWaterLevel", "flow"],
+		"keys_cn": ["上游水位", "下游水位", "流量"]
+	},
+	{
+		"name": "武隆",
+		"name_en": "wulong",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
+	},
+	{
+		"name": "宜昌",
+		"name_en": "yichang",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
+	},
+	{
+		"name": "枝城",
+		"name_en": "zhicheng",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
+	},
+	{
+		"name": "沙市",
+		"name_en": "shashi",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
+	},
+	{
+		"name": "监利",
+		"name_en": "jianli",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
+	},
+	{
+		"name": "螺山",
+		"name_en": "luoshan",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
+	},
+	{
+		"name": "三峡水库",
+		"name_en": "sanxiashuiku",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
+	},
+	{
+		"name": "莲花塘",
+		"name_en": "lianhuatang",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
+	},
+	{
+		"name": "黄石",
+		"name_en": "huangshi",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
+	},
+	{
+		"name": "码头镇",
+		"name_en": "matouzhen",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
+	},
+	{
+		"name": "城陵矶",
+		"name_en": "chenglingji",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
+	},
+	{
+		"name": "湖口",
+		"name_en": "hukou",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
+	},
+	{
+		"name": "仙桃",
+		"name_en": "xiantao",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
+	},
+	{
+		"name": "新江口",
+		"name_en": "xinjiangkou",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
+	},
+	{
+		"name": "沙道观",
+		"name_en": "shadaoguan",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
+	},
+	{
+		"name": "管家铺",
+		"name_en": "guanjiapu",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
+	},
+	{
+		"name": "康家岗",
+		"name_en": "kangjiagang",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
+	},
+	{
+		"name": "弥陀寺",
+		"name_en": "mituosi",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
+	},
+	{
+		"name": "横港",
+		"name_en": "henggang",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
+	},
+	{
+		"name": "梳妆台闸上",
+		"name_en": "shuzhuangtaizhashang",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
+	},
+	{
+		"name": "梳妆台闸下",
+		"name_en": "shuzhuangtaizhaxia",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
+	},
+	{
+		"name": "凤凰颈闸上",
+		"name_en": "fenghuangjingzhashang",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
+	},
+	{
+		"name": "凤凰颈闸下",
+		"name_en": "fenghuangjingzhaxia",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
+	},
+	{
+		"name": "凤凰颈站下",
+		"name_en": "fenghuangjingzhanxia",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
+	},
+	{
+		"name": "坝埂头",
+		"name_en": "bagengtou",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
+	},
+	{
+		"name": "裕溪闸上",
+		"name_en": "yuxizhashang",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
+	},
+	{
+		"name": "裕溪闸下",
+		"name_en": "yuxizhaxia",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
+	},
+	{
+		"name": "当涂",
+		"name_en": "dangtu",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
+	},
+	{
+		"name": "乌江闸上",
+		"name_en": "wujiangzhashang",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
+	},
+	{
+		"name": "乌江闸下",
+		"name_en": "wujiangzhaxia",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
+	},
+	{
+		"name": "新桥闸上",
+		"name_en": "xinqiaozhashang",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
+	},
+	{
+		"name": "新桥闸下",
+		"name_en": "xinqiaozhaxia",
+		"keys": ["waterLevel", "flow"],
+		"keys_cn": ["水位", "流量"]
 	},
 ]

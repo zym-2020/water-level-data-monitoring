@@ -102,34 +102,34 @@ mat_9 = [[255, 0, 0, 0, 255],
          [255, 0, 0, 0, 255]]
 
 mat_dot = [[255, 255, 255, 255, 255],
-         [255, 255, 255, 255, 255],
-         [255, 255, 255, 255, 255],
-         [255, 255, 255, 255, 255],
-         [255, 255, 255, 255, 255],
-         [255, 255, 255, 255, 255],
-         [255, 255, 255, 255, 255],
-         [255, 255, 255, 255, 255],
-         [255, 255, 0, 255, 255]]
+           [255, 255, 255, 255, 255],
+           [255, 255, 255, 255, 255],
+           [255, 255, 255, 255, 255],
+           [255, 255, 255, 255, 255],
+           [255, 255, 255, 255, 255],
+           [255, 255, 255, 255, 255],
+           [255, 255, 255, 255, 255],
+           [255, 255, 0, 255, 255]]
 
 mat_colon = [[255, 255, 255, 255, 255],
-         [255, 255, 255, 255, 255],
-         [255, 255, 0, 255, 255],
-         [255, 255, 255, 255, 255],
-         [255, 255, 255, 255, 255],
-         [255, 255, 255, 255, 255],
-         [255, 255, 255, 255, 255],
-         [255, 255, 255, 255, 255],
-         [255, 255, 0, 255, 255]]
+             [255, 255, 255, 255, 255],
+             [255, 255, 0, 255, 255],
+             [255, 255, 255, 255, 255],
+             [255, 255, 255, 255, 255],
+             [255, 255, 255, 255, 255],
+             [255, 255, 255, 255, 255],
+             [255, 255, 255, 255, 255],
+             [255, 255, 0, 255, 255]]
 
 mat_ = [[255, 255, 255, 255, 255],
-         [255, 255, 255, 255, 255],
-         [255, 255, 255, 255, 255],
-         [255, 255, 255, 255, 255],
-         [255, 255, 255, 255, 255],
-         [255, 0, 0, 0, 255],
-         [255, 255, 255, 255, 255],
-         [255, 255, 255, 255, 255],
-         [255, 255, 255, 255, 255]]
+        [255, 255, 255, 255, 255],
+        [255, 255, 255, 255, 255],
+        [255, 255, 255, 255, 255],
+        [255, 255, 255, 255, 255],
+        [255, 0, 0, 0, 255],
+        [255, 255, 255, 255, 255],
+        [255, 255, 255, 255, 255],
+        [255, 255, 255, 255, 255]]
 
 mat_list = [
     {
@@ -196,31 +196,25 @@ def check_matrix(img, row, col, mat):
     return True
 
 
-def execute(path, station):
+def execute(path, column_list):
     img = cv.imread(path)
     img = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
     thresh_img = cv.threshold(img, 240, 255, cv.THRESH_BINARY + cv.THRESH_OTSU)[1]
 
     result = []
     for i in range(thresh_img.shape[0] - 8):
-        str_num = ''
-        for j in range(170):
-            for k in range(len(mat_list)):
-                if check_matrix(thresh_img, i, j, mat_list[k]['mat']):
-                    str_num += mat_list[k]['value']
-        if str_num != '' and '0' <= str_num[0] <= '9':
-            result.append(str_num)
-    res = []
-    for i in range(len(result)):
-        temp_str = result[i]
-        time = str(datetime.now().year) + "-" + temp_str[0:5] + " " + temp_str[5:10] + ":00"
-        value = temp_str[10:]
-        res.append({
-            "station": station,
-            "time": time,
-            "value": value
-        })
-    return res
-
+        row_result = []
+        for j in range(len(column_list)):
+            temp_str = ''
+            for k in range(column_list[j]['start'], column_list[j]['end'] - 3):
+                for l in range(len(mat_list)):
+                    if check_matrix(thresh_img, i, k, mat_list[l]['mat']):
+                        temp_str += mat_list[l]['value']
+            row_result.append(temp_str)
+        if row_result[0] != '' and '0' <= row_result[0][0] <= '9':
+            result.append(row_result)
+    for res in result:
+        res[0] = str(datetime.now().year) + "-" + res[0][0:5] + " " + res[0][5:10] + ":00"
+    return result
 
 

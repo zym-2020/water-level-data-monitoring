@@ -10,19 +10,27 @@ python:
   python
 basedir:
   D:/zhuomian/水科院/python/水位/data/
+data-path:
+  D:/zhuomian/水科院/python/水位/utc+8_data/
 waterleveldb:
   D:/zhuomian/水科院/python/水位/water_level.db
 stationnamejson:
   D:/zhuomian/水科院/python/水位/station_name.json
 
+
+#长江下游网站
 waterlevellog:
   D:/zhuomian/水科院/python/水位/yangtze_downstream_log.txt
+yangtzeDownstreamStationJson:
+  D:/zhuomian/水科院/python/水位/yangtze_downstream_station.json
 
+#浙江水情网
 zhejianglog:
   D:/zhuomian/水科院/python/水位/zhejiang_log.txt
 zhejiangjson:
   D:/zhuomian/水科院/python/水位/zhejiang_station.json
 
+#安徽水情网
 anhuilog:
   D:/zhuomian/水科院/python/水位/anhui_log.txt
 anhuijson:
@@ -30,6 +38,7 @@ anhuijson:
 nodescriptpath:
   D:/zhuomian/水科院/python/水位/nodescript/
 
+#江苏水情网
 jiangsulog:
   D:/zhuomian/水科院/python/水位/jiangsu_log.txt
 jiangsujson:
@@ -37,6 +46,11 @@ jiangsujson:
 pngpath:
   D:/zhuomian/test/png/
 
+#湖北水情网
+hubeiLog:
+  D:/zhuomian/水科院/python/水位/hubei_log.txt
+hubeiJson:
+  D:/zhuomian/水科院/python/水位/hubei_station.json
 
 
 
