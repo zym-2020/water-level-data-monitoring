@@ -10,3 +10,7 @@ spring:
       max-request-size: 10MB
 server:
   port: 9999
+
+mybatis:
+  configuration:
+    call-setters-on-nulls: true

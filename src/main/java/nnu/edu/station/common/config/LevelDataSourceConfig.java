@@ -36,8 +36,10 @@ public class LevelDataSourceConfig {
     @Primary
     public SqlSessionFactory testSqlSessionFactory(@Qualifier("levelDataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
+
         bean.setDataSource(dataSource);
         bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/level/*.xml"));
+        bean.getObject().getConfiguration().setCallSettersOnNulls(true);
         return bean.getObject();
     }
 

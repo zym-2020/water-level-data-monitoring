@@ -27,6 +27,7 @@ public class ZhejiangServiceImpl implements ZhejiangService {
 
     @Override
     public List<Map<String, Object>> getInfoByStationAndTime(String station, String startTime, String endTime) {
+        List<Map<String, Object>> mapList = zhejiangMapper.getInfoByStationAndTime(station, startTime, endTime);
         return zhejiangMapper.getInfoByStationAndTime(station, startTime, endTime);
     }
 }

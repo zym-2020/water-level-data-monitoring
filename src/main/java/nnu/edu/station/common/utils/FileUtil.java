@@ -91,7 +91,7 @@ public class FileUtil {
             for (String s : keys_cn) {
                 temp += s + "\t";
             }
-            fileWriter.write(temp);
+//            fileWriter.write(temp);
             fileWriter.close();
 
         } catch (Exception e) {
