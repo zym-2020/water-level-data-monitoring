@@ -47,4 +47,7 @@ hubeiLog:
 hubeiJson:
   C:/water_level_data/hubei_station.json
 
+#水位预报模型地址
+predictionPath: C:/water_level_data/prediction/
+
 

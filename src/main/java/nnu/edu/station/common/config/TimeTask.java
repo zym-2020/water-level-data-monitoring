@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import nnu.edu.station.common.exception.MyException;
 import nnu.edu.station.common.result.ResultEnum;
 import nnu.edu.station.common.utils.FileUtil;
+import nnu.edu.station.common.utils.PredictionUtil;
 import nnu.edu.station.dao.level.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -75,6 +76,9 @@ public class TimeTask {
     @Value("${stationnamejson}")
     String stationNameJson;
 
+    @Value("${predictionPath}")
+    String predictionPath;
+
     @Value("${hubeiLog}")
     String hubeiLog;
 
@@ -100,7 +104,7 @@ public class TimeTask {
     HubeiMapper hubeiMapper;
 
 
-    @Scheduled(cron = "0 30,55 * * * ?")
+    @Scheduled(cron = "0 30 * * * ?")
     public void executePython() {
         try {
             /**
@@ -114,7 +118,21 @@ public class TimeTask {
             commands.add("/c");
             commands.add(python + " " + pythonDir + "yangtze_downstream.py " + yangtzeDownstreamStationJson + " " + waterLevelDb + " " + waterLevelLog);
             processBuilder.command(commands);
-            processBuilder.start();
+            Process start = processBuilder.start();
+            start.waitFor();
+            Map<String, List<JSONObject>> map = PredictionUtil.getPredictionStationList(stationNameJson);
+            List<JSONObject> list = map.get("yangtze");
+            for(int i = 0; i < list.size(); i++) {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-ddHH");
+                String model = predictionPath + list.get(i).getString("name_en") + "/encapsulation.py";
+                String output = predictionPath + list.get(i).getString("name_en") + "/result.json";
+                String timeParam = simpleDateFormat.format(new Date()) + ":00:00";
+                List<String> c = new ArrayList<>();
+                c.add("cmd");
+                c.add("/c");
+                c.add(python + " " + model + " " + timeParam + " " + output);
+                new ProcessBuilder().command(c).start();
+            }
         } catch (Exception e) {
             log.error(e.getMessage());
         }
@@ -136,7 +154,21 @@ public class TimeTask {
             commands.add(zhejiangLog);
             commands.add(zhejiangJson);
             processBuilder.command(commands);
-            processBuilder.start();
+            Process start = processBuilder.start();
+            start.waitFor();
+            Map<String, List<JSONObject>> map = PredictionUtil.getPredictionStationList(stationNameJson);
+            List<JSONObject> list = map.get("zhejiang");
+            for(int i = 0; i < list.size(); i++) {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-ddHH");
+                String model = predictionPath + list.get(i).getString("name_en") + "/encapsulation.py";
+                String output = predictionPath + list.get(i).getString("name_en") + "/result.json";
+                String timeParam = simpleDateFormat.format(new Date()) + ":00:00";
+                List<String> c = new ArrayList<>();
+                c.add("cmd");
+                c.add("/c");
+                c.add(python + " " + model + " " + timeParam + " " + output);
+                new ProcessBuilder().command(c).start();
+            }
 
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -159,8 +191,21 @@ public class TimeTask {
             commands.add(waterLevelDb);
             commands.add(anhuiLog);
             processBuilder.command(commands);
-            processBuilder.start();
-
+            Process start = processBuilder.start();
+            start.waitFor();
+            Map<String, List<JSONObject>> map = PredictionUtil.getPredictionStationList(stationNameJson);
+            List<JSONObject> list = map.get("anhui");
+            for(int i = 0; i < list.size(); i++) {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-ddHH");
+                String model = predictionPath + list.get(i).getString("name_en") + "/encapsulation.py";
+                String output = predictionPath + list.get(i).getString("name_en") + "/result.json";
+                String timeParam = simpleDateFormat.format(new Date()) + ":00:00";
+                List<String> c = new ArrayList<>();
+                c.add("cmd");
+                c.add("/c");
+                c.add(python + " " + model + " " + timeParam + " " + output);
+                new ProcessBuilder().command(c).start();
+            }
         } catch (Exception e) {
             log.error(e.getMessage());
         }
@@ -184,6 +229,31 @@ public class TimeTask {
             commands.add(jiangsuLog);
             processBuilder.command(commands);
             processBuilder.start();
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+    }
+    @Scheduled(cron = "0 30 * * * ?")
+    public void predictJiangsu() {
+        try {
+            /**
+             * @Description:江苏预报
+             * @Author: Yiming
+             * @Date: 2023/2/8
+             */
+            Map<String, List<JSONObject>> map = PredictionUtil.getPredictionStationList(stationNameJson);
+            List<JSONObject> list = map.get("jiangsu");
+            for(int i = 0; i < list.size(); i++) {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-ddHH");
+                String model = predictionPath + list.get(i).getString("name_en") + "/encapsulation.py";
+                String output = predictionPath + list.get(i).getString("name_en") + "/result.json";
+                String timeParam = simpleDateFormat.format(new Date()) + ":00:00";
+                List<String> c = new ArrayList<>();
+                c.add("cmd");
+                c.add("/c");
+                c.add(python + " " + model + " " + timeParam + " " + output);
+                new ProcessBuilder().command(c).start();
+            }
         } catch (Exception e) {
             log.error(e.getMessage());
         }

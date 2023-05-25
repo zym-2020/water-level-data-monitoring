@@ -55,3 +55,9 @@ hubeiJson:
 
 
 
+#水位预报模型地址
+predictionPath: D:/zhuomian/prediction/
+
+
+
+
