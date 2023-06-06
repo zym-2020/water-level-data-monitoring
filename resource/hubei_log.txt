@@ -1,0 +1,1 @@
+2023-05-01 14:30	HTTPConnectionPool(host='113.57.190.228', port=8001): Max retries exceeded with url: /Web/Report/GetRiverData?date=2023-05-01+14%3A00 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000000229CFC78E0>: Failed to establish a new connection: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。'))

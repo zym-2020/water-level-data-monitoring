@@ -29,7 +29,7 @@ def execute(json_path, db_path):
         day = element[1].text[:2]
         hour = element[1].text[4:6]
         now_time = year + "-" + month + "-" + day + " " + hour + ":00:00"
-        cur.execute("select * from yangtze_downstream where time = ? and station = ?", (now_time, element[0].text))
+        cur.execute("select * from yangtze_downstream where time = ? and station = ?", (now_time, element[0].text if element[0].text != '南京' else '南京水文站'))
         res_list = cur.fetchall()
         if len(res_list) == 0:
             cur.execute("insert into yangtze_downstream values(?, ?, ?, ?)",

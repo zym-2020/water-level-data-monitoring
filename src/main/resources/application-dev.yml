@@ -5,58 +5,58 @@ spring:
       driver-class-name: org.sqlite.JDBC
 
 pythondir:
-  D:/zhuomian/水科院/python/水位/
+  E:/github/station/resource/
 python:
   python
 basedir:
-  D:/zhuomian/水科院/python/水位/data/
+  E:/github/station/resource/data/
 data-path:
-  D:/zhuomian/水科院/python/水位/utc+8_data/
+  E:/github/station/resource/utc+8_data/
 waterleveldb:
-  D:/zhuomian/水科院/python/水位/water_level.db
+  E:/github/station/resource/water_level.db
 stationnamejson:
-  D:/zhuomian/水科院/python/水位/station_name.json
+  E:/github/station/resource/station_name.json
 
 
 #长江下游网站
 waterlevellog:
-  D:/zhuomian/水科院/python/水位/yangtze_downstream_log.txt
+  E:/github/station/resource/yangtze_downstream_log.txt
 yangtzeDownstreamStationJson:
-  D:/zhuomian/水科院/python/水位/yangtze_downstream_station.json
+  E:/github/station/resource/yangtze_downstream_station.json
 
 #浙江水情网
 zhejianglog:
-  D:/zhuomian/水科院/python/水位/zhejiang_log.txt
+  E:/github/station/resource/zhejiang_log.txt
 zhejiangjson:
-  D:/zhuomian/水科院/python/水位/zhejiang_station.json
+  E:/github/station/resource/zhejiang_station.json
 
 #安徽水情网
 anhuilog:
-  D:/zhuomian/水科院/python/水位/anhui_log.txt
+  E:/github/station/resource/anhui_log.txt
 anhuijson:
-  D:/zhuomian/水科院/python/水位/nodescript/station.json
+  E:/github/station/resource/nodescript/station.json
 nodescriptpath:
-  D:/zhuomian/水科院/python/水位/nodescript/
+  E:/github/station/resource/nodescript/
 
 #江苏水情网
 jiangsulog:
-  D:/zhuomian/水科院/python/水位/jiangsu_log.txt
+  E:/github/station/resource/jiangsu_log.txt
 jiangsujson:
-  D:/zhuomian/水科院/python/水位/jiangsu_station.json
+  E:/github/station/resource/jiangsu_station.json
 pngpath:
-  D:/zhuomian/test/png/
+  E:/github/station/resource/png/
 
 #湖北水情网
 hubeiLog:
-  D:/zhuomian/水科院/python/水位/hubei_log.txt
+  E:/github/station/resource/hubei_log.txt
 hubeiJson:
-  D:/zhuomian/水科院/python/水位/hubei_station.json
+  E:/github/station/resource/hubei_station.json
 
 
 
 
 #水位预报模型地址
-predictionPath: D:/zhuomian/prediction/
+predictionPath: E:/github/station/resource/prediction/
 
 
 
