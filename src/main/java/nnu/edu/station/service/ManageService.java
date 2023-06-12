@@ -22,4 +22,6 @@ public interface ManageService {
     void cacheByType(JSONObject jsonObject);
 
     void cacheByStation(JSONObject jsonObject);
+
+    void updateAllSingleFile(JSONObject jsonObject);
 }

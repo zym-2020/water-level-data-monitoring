@@ -100,4 +100,46 @@ public class FileUtil {
         }
     }
 
+    /**
+    * @Description:文件追加写入
+    * @Author: Yiming
+    * @Date: 2023/6/12
+    */
+    public static void addFileContent(String content, String fileAddress) {
+        File file = new File(fileAddress);
+        FileOutputStream fileOutputStream;
+        try {
+            if (!file.exists()) {
+                file.createNewFile();
+                fileOutputStream = new FileOutputStream(file);
+            } else {
+                fileOutputStream = new FileOutputStream(file, true);
+            }
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream, "utf-8");
+            outputStreamWriter.write(content);
+            outputStreamWriter.flush();
+            outputStreamWriter.close();
+            fileOutputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new MyException(ResultEnum.DEFAULT_EXCEPTION);
+        }
+    }
+
+    public static void writeFile(String content, String fileAddress) {
+        File file = new File(fileAddress);
+        try {
+            if (!file.exists()) file.createNewFile();
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream, "utf-8");
+            outputStreamWriter.write(content);
+            outputStreamWriter.flush();
+            outputStreamWriter.close();
+            fileOutputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new MyException(ResultEnum.DEFAULT_EXCEPTION);
+        }
+    }
+
 }

@@ -47,4 +47,10 @@ public class ManageController {
         manageService.cacheByStation(jsonObject);
         return ResultUtils.success();
     }
+
+    @RequestMapping(value = "/updateAllSingleFile", method = RequestMethod.POST)
+    public JsonResult updateAllSingleFile(@RequestBody JSONObject jsonObject) {
+        manageService.updateAllSingleFile(jsonObject);
+        return ResultUtils.success();
+    }
 }

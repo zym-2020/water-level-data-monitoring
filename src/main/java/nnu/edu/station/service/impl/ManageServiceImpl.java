@@ -2,6 +2,7 @@ package nnu.edu.station.service.impl;
 
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import nnu.edu.station.common.exception.MyException;
 import nnu.edu.station.common.result.ResultEnum;
 import nnu.edu.station.common.utils.FileUtil;
@@ -13,10 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -27,6 +25,7 @@ import java.util.Map;
  * @Description:
  */
 @Service
+@Slf4j
 public class ManageServiceImpl implements ManageService {
     @Autowired
     YangtzeDownstreamMapper yangtzeDownstreamMapper;
@@ -51,6 +50,9 @@ public class ManageServiceImpl implements ManageService {
 
     @Value("${data-path}")
     String utcDataPath;
+
+    @Value("${singleFileDir}")
+    String singleFileDir;
 
     @Override
     public String quireEarliestTime(String type) {
@@ -712,6 +714,49 @@ public class ManageServiceImpl implements ManageService {
             }
         } catch (Exception e) {
             throw new MyException(ResultEnum.QUERY_TYPE_ERROR);
+        }
+    }
+
+    @Override
+    public void updateAllSingleFile(JSONObject jsonObject) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String endTime = jsonObject.getString("time") + " 23:59:00";
+        try {
+
+            JSONArray jsonArray = FileUtil.readJsonArrayFile(stationNameJson);
+            for (int i = 0; i < jsonArray.size(); i++) {
+                String station = (jsonArray.getObject(i, JSONObject.class)).getString("name");
+                String name = (jsonArray.getObject(i, JSONObject.class)).getString("name_en");
+                String type = (jsonArray.getObject(i, JSONObject.class)).getString("type");
+                List<String> keys = (jsonArray.getObject(i, JSONObject.class)).getObject("keys", List.class);
+                String startTime = format.format(new Date((jsonArray.getObject(i, JSONObject.class)).getList("startTime", Long.class).get(0)));
+                List<Map<String, Object>> infoList;
+                if (type.equals("yangtze")) {
+                    infoList = yangtzeDownstreamMapper.getInfoByStationAndTimeAsc(station, startTime, endTime);
+                } else if (type.equals("anhui")) {
+                    infoList = anhuiMapper.getInfoByStationAndTime(station, startTime, endTime);
+                } else if (type.equals("zhejiang")) {
+                    infoList = zhejiangMapper.getInfoByStationAndTime(station, startTime, endTime);
+                } else if (type.equals("jiangsu")) {
+                    infoList = jiangsuMapper.getInfoByStationAndTime(station, startTime, endTime);
+                } else if (type.equals("hubei")) {
+                    infoList = hubeiMapper.getInfoByStationAndTime(station, startTime, endTime);
+                } else {
+                    throw new MyException(ResultEnum.QUERY_TYPE_ERROR);
+                }
+                String content = "";
+                for (Map<String, Object> map : infoList) {
+                    content = content + map.get("time");
+                    for (String key : keys) {
+                        content = content + "\t" + map.get(key);
+                    }
+                    content += "\n";
+                }
+                FileUtil.writeFile(content, singleFileDir + name + ".txt");
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            throw new MyException(ResultEnum.DEFAULT_EXCEPTION);
         }
     }
 }

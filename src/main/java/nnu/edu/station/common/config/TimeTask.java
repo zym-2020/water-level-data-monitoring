@@ -88,6 +88,9 @@ public class TimeTask {
     @Value("${data-path}")
     String utcDataPath;
 
+    @Value("${singleFileDir}")
+    String singleFileDir;
+
     @Autowired
     YangtzeDownstreamMapper yangtzeDownstreamMapper;
 
@@ -450,12 +453,23 @@ public class TimeTask {
                     name = (jsonArray.getObject(i, JSONObject.class)).getString("name_en");
                     keys = (jsonArray.getObject(i, JSONObject.class)).getObject("keys", List.class);
                     keys_cn = (jsonArray.getObject(i, JSONObject.class)).getObject("keys_cn", List.class);
+                    break;
                 }
             }
             List<Map<String, Object>> infoList = yangtzeDownstreamMapper.getInfoByStationAndTimeAsc(station, startTime, endTime);
             String fileAddress = utcDataPath + name + "UTC+8" + day + ".txt";
             addresses.add(fileAddress);
             FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
+
+            String str = "";
+            for (Map<String, Object> map : infoList) {
+                str = str + map.get("time").toString();
+                for (String key : keys) {
+                    str = str + "\t" + map.get(key);
+                }
+                str += "\n";
+            }
+            FileUtil.addFileContent(str, singleFileDir + name + ".txt");
         }
 
         /**
@@ -473,12 +487,23 @@ public class TimeTask {
                     name = (jsonArray.getObject(i, JSONObject.class)).getString("name_en");
                     keys = (jsonArray.getObject(i, JSONObject.class)).getObject("keys", List.class);
                     keys_cn = (jsonArray.getObject(i, JSONObject.class)).getObject("keys_cn", List.class);
+                    break;
                 }
             }
             List<Map<String, Object>> infoList = jiangsuMapper.getInfoByStationAndTime(station, startTime, endTime);
             String fileAddress = utcDataPath + name + "UTC+8" + day + ".txt";
             addresses.add(fileAddress);
             FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
+
+            String str = "";
+            for (Map<String, Object> map : infoList) {
+                str = str + map.get("time").toString();
+                for (String key : keys) {
+                    str = str + "\t" + map.get(key);
+                }
+                str += "\n";
+            }
+            FileUtil.addFileContent(str, singleFileDir + name + ".txt");
         }
 
         /**
@@ -496,12 +521,23 @@ public class TimeTask {
                     name = (jsonArray.getObject(i, JSONObject.class)).getString("name_en");
                     keys = (jsonArray.getObject(i, JSONObject.class)).getObject("keys", List.class);
                     keys_cn = (jsonArray.getObject(i, JSONObject.class)).getObject("keys_cn", List.class);
+                    break;
                 }
             }
             List<Map<String, Object>> infoList = zhejiangMapper.getInfoByStationAndTime(station, startTime, endTime);
             String fileAddress = utcDataPath + name + "UTC+8" + day + ".txt";
             addresses.add(fileAddress);
             FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
+
+            String str = "";
+            for (Map<String, Object> map : infoList) {
+                str = str + map.get("time").toString();
+                for (String key : keys) {
+                    str = str + "\t" + map.get(key);
+                }
+                str += "\n";
+            }
+            FileUtil.addFileContent(str, singleFileDir + name + ".txt");
         }
 
         /**
@@ -519,12 +555,23 @@ public class TimeTask {
                     name = (jsonArray.getObject(i, JSONObject.class)).getString("name_en");
                     keys = (jsonArray.getObject(i, JSONObject.class)).getObject("keys", List.class);
                     keys_cn = (jsonArray.getObject(i, JSONObject.class)).getObject("keys_cn", List.class);
+                    break;
                 }
             }
             List<Map<String, Object>> infoList = anhuiMapper.getInfoByStationAndTime(station, startTime, endTime);
             String fileAddress = utcDataPath + name + "UTC+8" + day + ".txt";
             addresses.add(fileAddress);
             FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
+
+            String str = "";
+            for (Map<String, Object> map : infoList) {
+                str = str + map.get("time").toString();
+                for (String key : keys) {
+                    str = str + "\t" + map.get(key);
+                }
+                str += "\n";
+            }
+            FileUtil.addFileContent(str, singleFileDir + name + ".txt");
         }
 
         /**
@@ -542,12 +589,23 @@ public class TimeTask {
                     name = (jsonArray.getObject(i, JSONObject.class)).getString("name_en");
                     keys = (jsonArray.getObject(i, JSONObject.class)).getObject("keys", List.class);
                     keys_cn = (jsonArray.getObject(i, JSONObject.class)).getObject("keys_cn", List.class);
+                    break;
                 }
             }
             List<Map<String, Object>> infoList = hubeiMapper.getInfoByStationAndTime(station, startTime, endTime);
             String fileAddress = utcDataPath + name + "UTC+8" + day + ".txt";
             addresses.add(fileAddress);
             FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
+
+            String str = "";
+            for (Map<String, Object> map : infoList) {
+                str = str + map.get("time").toString();
+                for (String key : keys) {
+                    str = str + "\t" + map.get(key);
+                }
+                str += "\n";
+            }
+            FileUtil.addFileContent(str, singleFileDir + name + ".txt");
         }
 
 
@@ -561,6 +619,7 @@ public class TimeTask {
 
         String destination = utcDataPath + "allUTC+8.zip";
         FileUtil.compressFile(destination, addresses);
+
     }
 
 }

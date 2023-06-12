@@ -61,4 +61,9 @@ public class DownloadController {
     public void downloadAllByStation2(@PathVariable String station, HttpServletResponse response) {
         downloadService.downloadAllByStation(station, response, 2);
     }
+
+    @RequestMapping(value = "/downloadAllBySingleFile/{stationName}", method = RequestMethod.GET)
+    public void downloadAllBySingleFile(@PathVariable String stationName, HttpServletResponse response) {
+        downloadService.downloadAllBySingleFile(stationName, response);
+    }
 }

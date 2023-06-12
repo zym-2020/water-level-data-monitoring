@@ -17,4 +17,6 @@ public interface DownloadService {
     void downloadByStationAndTime(String station, String startTime, String endTime, HttpServletResponse response, int flag);
 
     void downloadAllByStation(String station, HttpServletResponse response, int flag);
+
+    void downloadAllBySingleFile(String stationName, HttpServletResponse response);
 }

@@ -36,6 +36,9 @@ public class DownloadServiceImpl implements DownloadService {
     @Value("${data-path}")
     String utcDataPath;
 
+    @Value("${singleFileDir}")
+    String singleFileDir;
+
     @Override
     public void downloadOne(String fileName, HttpServletResponse response, int flag) {
         String path = "";
@@ -161,6 +164,35 @@ public class DownloadServiceImpl implements DownloadService {
         try {
             response.setContentType("application/octet-stream");
             response.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(station + ".zip", "UTF-8"));
+            response.addHeader("Content-Length", "" + file.length());
+            InputStream in = new FileInputStream(file);
+            ServletOutputStream sos = response.getOutputStream();
+            byte[] b = new byte[1024];
+            int len;
+            while((len = in.read(b)) > 0) {
+                sos.write(b, 0, len);
+            }
+            sos.flush();
+            sos.close();
+            in.close();
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            throw new MyException(ResultEnum.DEFAULT_EXCEPTION);
+        }
+    }
+
+    @Override
+    public void downloadAllBySingleFile(String stationName, HttpServletResponse response) {
+        String path = singleFileDir + stationName + ".txt";
+        File file = new File(path);
+        if (!file.exists()) {
+            throw new MyException(ResultEnum.NO_OBJECT);
+        }
+        try {
+            response.setContentType("application/octet-stream");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String fileName = stationName + simpleDateFormat.format(new Date()) + ".txt";
+            response.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
             response.addHeader("Content-Length", "" + file.length());
             InputStream in = new FileInputStream(file);
             ServletOutputStream sos = response.getOutputStream();

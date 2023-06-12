@@ -12,6 +12,8 @@ basedir:
   C:/water_level_data/data/
 data-path:
   C:/water_level_data/utc+8_data/
+singleFileDir:
+  C:/water_level_data/all/
 waterleveldb:
   C:/water_level_data/water_level.db
 stationnamejson:
