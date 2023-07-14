@@ -889,5 +889,127 @@
 		"type": "zhejiang",
 		"startTime": [1679704200000, 1679675400000],
 		"prediction": false
+	},
+	{
+		"name": "粱垛河闸",
+		"name_en": "liangduohezha",
+		"keys": ["upstreamWaterLevel", "downstreamWaterLevel", "flow"],
+		"keys_cn": ["上游水位", "下游水位", "流量"],
+		"lon": 0,
+		"lat": 0,
+		"type": "jiangsu",
+		"startTime": [1689381000000, 1689352200000],
+		"prediction": false
+	},
+	{
+		"name": "东台河闸",
+		"name_en": "dongtaihezha",
+		"keys": ["upstreamWaterLevel", "flow"],
+		"keys_cn": ["上游水位", "流量"],
+		"lon": 0,
+		"lat": 0,
+		"type": "jiangsu",
+		"startTime": [1689381000000, 1689352200000],
+		"prediction": false
+	},
+	{
+		"name": "四卯酉闸",
+		"name_en": "simaoyouzha",
+		"url": "http://www.jsswj.com.cn:88/jsswxxSSI/static/map/chart/0/05ea9148db234b8d994367e8432a6711_list.png",
+		"keys": ["upstreamWaterLevel", "downstreamWaterLevel", "flow"],
+		"keys_cn": ["上游水位", "下游水位", "流量"],
+		"lon": 0,
+		"lat": 0,
+		"type": "jiangsu",
+		"startTime": [1689381000000, 1689352200000],
+		"prediction": false
+	},
+	{
+		"name": "王港新闸",
+		"name_en": "wanggangxinzha",
+		"keys": ["upstreamWaterLevel", "downstreamWaterLevel", "flow"],
+		"keys_cn": ["上游水位", "下游水位", "流量"],
+		"lon": 0,
+		"lat": 0,
+		"type": "jiangsu",
+		"startTime": [1689381000000, 1689352200000],
+		"prediction": false
+	},
+	{
+		"name": "利民河闸",
+		"name_en": "liminhezha",
+		"keys": ["upstreamWaterLevel", "downstreamWaterLevel", "flow"],
+		"keys_cn": ["上游水位", "下游水位", "流量"],
+		"lon": 0,
+		"lat": 0,
+		"type": "jiangsu",
+		"startTime": [1689381000000, 1689352200000],
+		"prediction": false
+	},
+	{
+		"name": "射阳河闸",
+		"name_en": "sheyanghezha",
+		"keys": ["upstreamWaterLevel", "downstreamWaterLevel", "flow"],
+		"keys_cn": ["上游水位", "下游水位", "流量"],
+		"lon": 0,
+		"lat": 0,
+		"type": "jiangsu",
+		"startTime": [1689381000000, 1689352200000],
+		"prediction": false
+	},
+	{
+		"name": "海口南闸",
+		"name_en": "haikounanzha",
+		"keys": ["upstreamWaterLevel", "downstreamWaterLevel", "flow"],
+		"keys_cn": ["上游水位", "下游水位", "流量"],
+		"lon": 0,
+		"lat": 0,
+		"type": "jiangsu",
+		"startTime": [1689381000000, 1689352200000],
+		"prediction": false
+	},
+	{
+		"name": "大丰闸",
+		"name_en": "dafengzha",
+		"keys": ["upstreamWaterLevel", "downstreamWaterLevel", "flow"],
+		"keys_cn": ["上游水位", "下游水位", "流量"],
+		"lon": 0,
+		"lat": 0,
+		"type": "jiangsu",
+		"startTime": [1689381000000, 1689352200000],
+		"prediction": false
+	},
+	{
+		"name": "斗龙港闸",
+		"name_en": "doulonggangzha",
+		"keys": ["upstreamWaterLevel", "downstreamWaterLevel", "flow"],
+		"keys_cn": ["上游水位", "下游水位", "流量"],
+		"lon": 0,
+		"lat": 0,
+		"type": "jiangsu",
+		"startTime": [1689381000000, 1689352200000],
+		"prediction": false
+	},
+	{
+		"name": "西潮河闸",
+		"name_en": "xichaohezha",
+		"keys": ["upstreamWaterLevel", "downstreamWaterLevel", "flow"],
+		"keys_cn": ["上游水位", "下游水位", "流量"],
+		"lon": 0,
+		"lat": 0,
+		"type": "jiangsu",
+		"startTime": [1689381000000, 1689352200000],
+		"prediction": false
+	},
+	{
+		"name": "划子口闸",
+		"name_en": "huazikouzha",
+		"keys": ["upstreamWaterLevel", "downstreamWaterLevel", "flow"],
+		"keys_cn": ["上游水位", "下游水位", "流量"],
+		"lon": 0,
+		"lat": 0,
+		"type": "jiangsu",
+		"startTime": [1689381000000, 1689352200000],
+		"prediction": false
 	}
 ]

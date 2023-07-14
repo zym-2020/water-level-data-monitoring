@@ -658,5 +658,297 @@
 				"end": 270
 			}
 		]
+	},
+	{
+		"name": "粱垛河闸",
+		"name_en": "liangduohezha",
+		"url": "http://www.jsswj.com.cn:88/jsswxxSSI/static/map/chart/0/b5db005ce42a478a921922b5b21fad5e_list.png",
+		"range": [
+			{
+				"key": "time",
+				"start": 0,
+				"end": 81
+			},
+			{
+				"key": "upstream_water_level",
+				"start": 81,
+				"end": 144
+			},
+			{
+				"key": "downstream_water_level",
+				"start": 144,
+				"end": 207
+			},
+			{
+				"key": "flow",
+				"start": 207,
+				"end": 270
+			}
+		]
+	},
+	{
+		"name": "东台河闸",
+		"name_en": "dongtaihezha",
+		"url": "http://www.jsswj.com.cn:88/jsswxxSSI/static/map/chart/0/02634643f4c344f4ae725d867d66f4c0_list.png",
+		"range": [
+			{
+				"key": "time",
+				"start": 0,
+				"end": 101
+			},
+			{
+				"key": "upstream_water_level",
+				"start": 101,
+				"end": 184
+			},
+			{
+				"key": "flow",
+				"start": 184,
+				"end": 270
+			}
+		]
+	},
+	{
+		"name": "四卯酉闸",
+		"name_en": "simaoyouzha",
+		"url": "http://www.jsswj.com.cn:88/jsswxxSSI/static/map/chart/0/05ea9148db234b8d994367e8432a6711_list.png",
+		"range": [
+			{
+				"key": "time",
+				"start": 0,
+				"end": 81
+			},
+			{
+				"key": "upstream_water_level",
+				"start": 81,
+				"end": 144
+			},
+			{
+				"key": "downstream_water_level",
+				"start": 144,
+				"end": 207
+			},
+			{
+				"key": "flow",
+				"start": 207,
+				"end": 270
+			}
+		]
+	},
+	{
+		"name": "王港新闸",
+		"name_en": "wanggangxinzha",
+		"url": "http://www.jsswj.com.cn:88/jsswxxSSI/static/map/chart/0/530f2ede3dc8413591474c9b53bcfe1b_list.png",
+		"range": [
+			{
+				"key": "time",
+				"start": 0,
+				"end": 81
+			},
+			{
+				"key": "upstream_water_level",
+				"start": 81,
+				"end": 144
+			},
+			{
+				"key": "downstream_water_level",
+				"start": 144,
+				"end": 207
+			},
+			{
+				"key": "flow",
+				"start": 207,
+				"end": 270
+			}
+		]
+	},
+	{
+		"name": "利民河闸",
+		"name_en": "liminhezha",
+		"url": "http://www.jsswj.com.cn:88/jsswxxSSI/static/map/chart/0/56c6f6d980944fffb65cd04399d567c9_list.png",
+		"range": [
+			{
+				"key": "time",
+				"start": 0,
+				"end": 81
+			},
+			{
+				"key": "upstream_water_level",
+				"start": 81,
+				"end": 144
+			},
+			{
+				"key": "downstream_water_level",
+				"start": 144,
+				"end": 207
+			},
+			{
+				"key": "flow",
+				"start": 207,
+				"end": 270
+			}
+		]
+	},
+	{
+		"name": "射阳河闸",
+		"name_en": "sheyanghezha",
+		"url": "http://www.jsswj.com.cn:88/jsswxxSSI/static/map/chart/0/6a4c87aa900f49bb92b62981caa7c219_list.png",
+		"range": [
+			{
+				"key": "time",
+				"start": 0,
+				"end": 81
+			},
+			{
+				"key": "upstream_water_level",
+				"start": 81,
+				"end": 144
+			},
+			{
+				"key": "downstream_water_level",
+				"start": 144,
+				"end": 207
+			},
+			{
+				"key": "flow",
+				"start": 207,
+				"end": 270
+			}
+		]
+	},
+	{
+		"name": "海口南闸",
+		"name_en": "haikounanzha",
+		"url": "http://www.jsswj.com.cn:88/jsswxxSSI/static/map/chart/0/ca31d70d69464e26909a017bafabe41f_list.png",
+		"range": [
+			{
+				"key": "time",
+				"start": 0,
+				"end": 81
+			},
+			{
+				"key": "upstream_water_level",
+				"start": 81,
+				"end": 144
+			},
+			{
+				"key": "downstream_water_level",
+				"start": 144,
+				"end": 207
+			},
+			{
+				"key": "flow",
+				"start": 207,
+				"end": 270
+			}
+		]
+	},
+	{
+		"name": "大丰闸",
+		"name_en": "dafengzha",
+		"url": "http://www.jsswj.com.cn:88/jsswxxSSI/static/map/chart/0/bf15197ba3e245ff976a58993d3929b9_list.png",
+		"range": [
+			{
+				"key": "time",
+				"start": 0,
+				"end": 81
+			},
+			{
+				"key": "upstream_water_level",
+				"start": 81,
+				"end": 144
+			},
+			{
+				"key": "downstream_water_level",
+				"start": 144,
+				"end": 207
+			},
+			{
+				"key": "flow",
+				"start": 207,
+				"end": 270
+			}
+		]
+	},
+	{
+		"name": "斗龙港闸",
+		"name_en": "doulonggangzha",
+		"url": "http://www.jsswj.com.cn:88/jsswxxSSI/static/map/chart/0/ea6543b1d6674ad09d8f741d741e34db_list.png",
+		"range": [
+			{
+				"key": "time",
+				"start": 0,
+				"end": 81
+			},
+			{
+				"key": "upstream_water_level",
+				"start": 81,
+				"end": 144
+			},
+			{
+				"key": "downstream_water_level",
+				"start": 144,
+				"end": 207
+			},
+			{
+				"key": "flow",
+				"start": 207,
+				"end": 270
+			}
+		]
+	},
+	{
+		"name": "西潮河闸",
+		"name_en": "xichaohezha",
+		"url": "http://www.jsswj.com.cn:88/jsswxxSSI/static/map/chart/0/310c0f6b21144362b8cce0efde684b70_list.png",
+		"range": [
+			{
+				"key": "time",
+				"start": 0,
+				"end": 81
+			},
+			{
+				"key": "upstream_water_level",
+				"start": 81,
+				"end": 144
+			},
+			{
+				"key": "downstream_water_level",
+				"start": 144,
+				"end": 207
+			},
+			{
+				"key": "flow",
+				"start": 207,
+				"end": 270
+			}
+		]
+	},
+	{
+		"name": "划子口闸",
+		"name_en": "huazikouzha",
+		"url": "http://www.jsswj.com.cn:88/jsswxxSSI/static/map/chart/0/3bc4a382a9cf41a096bf4794afce58be_list.png",
+		"range": [
+			{
+				"key": "time",
+				"start": 0,
+				"end": 81
+			},
+			{
+				"key": "upstream_water_level",
+				"start": 81,
+				"end": 144
+			},
+			{
+				"key": "downstream_water_level",
+				"start": 144,
+				"end": 207
+			},
+			{
+				"key": "flow",
+				"start": 207,
+				"end": 270
+			}
+		]
 	}
 ]
