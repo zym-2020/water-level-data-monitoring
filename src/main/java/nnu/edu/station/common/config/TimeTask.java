@@ -8,6 +8,7 @@ import nnu.edu.station.common.exception.MyException;
 import nnu.edu.station.common.result.ResultEnum;
 import nnu.edu.station.common.utils.FileUtil;
 import nnu.edu.station.common.utils.PredictionUtil;
+import nnu.edu.station.common.utils.ProcessUtil;
 import nnu.edu.station.dao.level.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +19,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -115,27 +117,26 @@ public class TimeTask {
             * @Author: Yiming
             * @Date: 2023/2/8
             */
-            ProcessBuilder processBuilder = new ProcessBuilder();
             List<String> commands = new ArrayList<>();
             commands.add("cmd");
             commands.add("/c");
             commands.add(python + " " + pythonDir + "yangtze_downstream.py " + yangtzeDownstreamStationJson + " " + waterLevelDb + " " + waterLevelLog);
-            processBuilder.command(commands);
-            Process start = processBuilder.start();
-//            start.waitFor();
-//            Map<String, List<JSONObject>> map = PredictionUtil.getPredictionStationList(stationNameJson);
-//            List<JSONObject> list = map.get("yangtze");
-//            for(int i = 0; i < list.size(); i++) {
-//                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-ddHH");
-//                String model = predictionPath + list.get(i).getString("name_en") + "/encapsulation.py";
-//                String output = predictionPath + list.get(i).getString("name_en") + "/result.json";
-//                String timeParam = simpleDateFormat.format(new Date()) + ":00:00";
-//                List<String> c = new ArrayList<>();
-//                c.add("cmd");
-//                c.add("/c");
-//                c.add(python + " " + model + " " + timeParam + " " + output);
-//                new ProcessBuilder().command(c).start();
-//            }
+            Process start = ProcessUtil.exeProcess(commands);
+            ProcessUtil.readProcessOutput(start.getInputStream(), System.out);
+            start.waitFor();
+            Map<String, List<JSONObject>> map = PredictionUtil.getPredictionStationList(stationNameJson);
+            List<JSONObject> list = map.get("yangtze");
+            for(int i = 0; i < list.size(); i++) {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-ddHH");
+                String model = Paths.get(predictionPath, list.get(i).getString("name_en"), "encapsulation.py").toString();
+                String output = Paths.get(predictionPath, list.get(i).getString("name_en"), "result.json").toString();;
+                String timeParam = simpleDateFormat.format(new Date()) + ":00:00";
+                List<String> c = new ArrayList<>();
+                c.add("cmd");
+                c.add("/c");
+                c.add(python + " " + model + " " + timeParam + " " + output);
+                ProcessUtil.readProcessOutput(ProcessUtil.exeProcess(c).getInputStream(), System.out);
+            }
         } catch (Exception e) {
             log.error(e.getMessage());
         }
@@ -149,29 +150,28 @@ public class TimeTask {
              * @Author: Yiming
              * @Date: 2023/2/8
              */
-            ProcessBuilder processBuilder = new ProcessBuilder();
             List<String> commands = new ArrayList<>();
             commands.add(python);
             commands.add(pythonDir + "zhejiang.py");
             commands.add(waterLevelDb);
             commands.add(zhejiangLog);
             commands.add(zhejiangJson);
-            processBuilder.command(commands);
-            Process start = processBuilder.start();
-//            start.waitFor();
-//            Map<String, List<JSONObject>> map = PredictionUtil.getPredictionStationList(stationNameJson);
-//            List<JSONObject> list = map.get("zhejiang");
-//            for(int i = 0; i < list.size(); i++) {
-//                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-ddHH");
-//                String model = predictionPath + list.get(i).getString("name_en") + "/encapsulation.py";
-//                String output = predictionPath + list.get(i).getString("name_en") + "/result.json";
-//                String timeParam = simpleDateFormat.format(new Date()) + ":00:00";
-//                List<String> c = new ArrayList<>();
-//                c.add("cmd");
-//                c.add("/c");
-//                c.add(python + " " + model + " " + timeParam + " " + output);
-//                new ProcessBuilder().command(c).start();
-//            }
+            Process start = ProcessUtil.exeProcess(commands);
+            ProcessUtil.readProcessOutput(start.getInputStream(), System.out);
+            start.waitFor();
+            Map<String, List<JSONObject>> map = PredictionUtil.getPredictionStationList(stationNameJson);
+            List<JSONObject> list = map.get("zhejiang");
+            for(int i = 0; i < list.size(); i++) {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-ddHH");
+                String model = Paths.get(predictionPath, list.get(i).getString("name_en"), "encapsulation.py").toString();
+                String output = Paths.get(predictionPath, list.get(i).getString("name_en"), "result.json").toString();;
+                String timeParam = simpleDateFormat.format(new Date()) + ":00:00";
+                List<String> c = new ArrayList<>();
+                c.add("cmd");
+                c.add("/c");
+                c.add(python + " " + model + " " + timeParam + " " + output);
+                ProcessUtil.readProcessOutput(ProcessUtil.exeProcess(c).getInputStream(), System.out);
+            }
 
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -186,29 +186,28 @@ public class TimeTask {
              * @Author: Yiming
              * @Date: 2023/2/8
              */
-            ProcessBuilder processBuilder = new ProcessBuilder();
             List<String> commands = new ArrayList<>();
             commands.add("node");
             commands.add(nodeScriptPath + "index.js");
             commands.add(anhuiJson);
             commands.add(waterLevelDb);
             commands.add(anhuiLog);
-            processBuilder.command(commands);
-            Process start = processBuilder.start();
-//            start.waitFor();
-//            Map<String, List<JSONObject>> map = PredictionUtil.getPredictionStationList(stationNameJson);
-//            List<JSONObject> list = map.get("anhui");
-//            for(int i = 0; i < list.size(); i++) {
-//                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-ddHH");
-//                String model = predictionPath + list.get(i).getString("name_en") + "/encapsulation.py";
-//                String output = predictionPath + list.get(i).getString("name_en") + "/result.json";
-//                String timeParam = simpleDateFormat.format(new Date()) + ":00:00";
-//                List<String> c = new ArrayList<>();
-//                c.add("cmd");
-//                c.add("/c");
-//                c.add(python + " " + model + " " + timeParam + " " + output);
-//                new ProcessBuilder().command(c).start();
-//            }
+            Process start = ProcessUtil.exeProcess(commands);
+            ProcessUtil.readProcessOutput(start.getInputStream(), System.out);
+            start.waitFor();
+            Map<String, List<JSONObject>> map = PredictionUtil.getPredictionStationList(stationNameJson);
+            List<JSONObject> list = map.get("anhui");
+            for(int i = 0; i < list.size(); i++) {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-ddHH");
+                String model = Paths.get(predictionPath, list.get(i).getString("name_en"), "encapsulation.py").toString();
+                String output = Paths.get(predictionPath, list.get(i).getString("name_en"), "result.json").toString();;
+                String timeParam = simpleDateFormat.format(new Date()) + ":00:00";
+                List<String> c = new ArrayList<>();
+                c.add("cmd");
+                c.add("/c");
+                c.add(python + " " + model + " " + timeParam + " " + output);
+                ProcessUtil.readProcessOutput(ProcessUtil.exeProcess(c).getInputStream(), System.out);
+            }
         } catch (Exception e) {
             log.error(e.getMessage());
         }
@@ -222,7 +221,6 @@ public class TimeTask {
              * @Author: Yiming
              * @Date: 2023/2/8
              */
-            ProcessBuilder processBuilder = new ProcessBuilder();
             List<String> commands = new ArrayList<>();
             commands.add(python);
             commands.add(pythonDir + "jiangsu.py");
@@ -230,37 +228,37 @@ public class TimeTask {
             commands.add(waterLevelDb);
             commands.add(pngPath);
             commands.add(jiangsuLog);
-            processBuilder.command(commands);
-            processBuilder.start();
+            Process start = ProcessUtil.exeProcess(commands);
+            ProcessUtil.readProcessOutput(start.getInputStream(), System.out);
         } catch (Exception e) {
             log.error(e.getMessage());
         }
     }
-//    @Scheduled(cron = "0 30 * * * ?")
-//    public void predictJiangsu() {
-//        try {
-//            /**
-//             * @Description:江苏预报
-//             * @Author: Yiming
-//             * @Date: 2023/2/8
-//             */
-//            Map<String, List<JSONObject>> map = PredictionUtil.getPredictionStationList(stationNameJson);
-//            List<JSONObject> list = map.get("jiangsu");
-//            for(int i = 0; i < list.size(); i++) {
-//                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-ddHH");
-//                String model = predictionPath + list.get(i).getString("name_en") + "/encapsulation.py";
-//                String output = predictionPath + list.get(i).getString("name_en") + "/result.json";
-//                String timeParam = simpleDateFormat.format(new Date()) + ":00:00";
-//                List<String> c = new ArrayList<>();
-//                c.add("cmd");
-//                c.add("/c");
-//                c.add(python + " " + model + " " + timeParam + " " + output);
-//                new ProcessBuilder().command(c).start();
-//            }
-//        } catch (Exception e) {
-//            log.error(e.getMessage());
-//        }
-//    }
+    @Scheduled(cron = "0 30 * * * ?")
+    public void predictJiangsu() {
+        try {
+            /**
+             * @Description:江苏预报
+             * @Author: Yiming
+             * @Date: 2023/2/8
+             */
+            Map<String, List<JSONObject>> map = PredictionUtil.getPredictionStationList(stationNameJson);
+            List<JSONObject> list = map.get("jiangsu");
+            for(int i = 0; i < list.size(); i++) {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-ddHH");
+                String model = Paths.get(predictionPath, list.get(i).getString("name_en"), "encapsulation.py").toString();
+                String output = Paths.get(predictionPath, list.get(i).getString("name_en"), "result.json").toString();
+                String timeParam = simpleDateFormat.format(new Date()) + ":00:00";
+                List<String> c = new ArrayList<>();
+                c.add("cmd");
+                c.add("/c");
+                c.add(python + " " + model + " " + timeParam + " " + output);
+                ProcessUtil.readProcessOutput(ProcessUtil.exeProcess(c).getInputStream(), System.out);
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+    }
 
     @Scheduled(cron = "0 30 * * * ?")
     public void executePythonHubei() {
@@ -270,13 +268,12 @@ public class TimeTask {
              * @Author: Yiming
              * @Date: 2023/2/8
              */
-            ProcessBuilder processBuilder = new ProcessBuilder();
             List<String> commands = new ArrayList<>();
             commands.add("cmd");
             commands.add("/c");
             commands.add(python + " " + pythonDir + "hubei.py " + hubeiJson + " " + waterLevelDb + " " + hubeiLog);
-            processBuilder.command(commands);
-            processBuilder.start();
+            Process start = ProcessUtil.exeProcess(commands);
+            ProcessUtil.readProcessOutput(start.getInputStream(), System.out);
         } catch (Exception e) {
             log.error(e.getMessage());
         }

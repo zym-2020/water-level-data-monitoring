@@ -6,6 +6,8 @@ import nnu.edu.station.service.PredictionService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.Paths;
+
 /**
  * Created with IntelliJ IDEA.
  *
@@ -20,7 +22,7 @@ public class PredictionServiceImpl implements PredictionService {
 
     @Override
     public JSONObject getPrediction(String stationName) {
-        String path = predictionPath + stationName + "/result.json";
+        String path = Paths.get(predictionPath, stationName, "result.json").toString();
         return FileUtil.readJsonObjectFile(path);
     }
 }
