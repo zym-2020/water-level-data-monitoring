@@ -1,5 +1,6 @@
 package nnu.edu.station.common.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import nnu.edu.station.common.exception.MyException;
 import nnu.edu.station.common.result.ResultEnum;
 
@@ -14,15 +15,15 @@ import java.util.List;
  * @Date: 2023/09/08/9:06
  * @Description:
  */
+@Slf4j
 public class ProcessUtil {
     public static void readProcessOutput(InputStream inputStream, PrintStream out) {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("GBK")));
             String line;
             while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+                log.info(line);
             }
-            System.out.println("-end");
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

@@ -130,7 +130,10 @@ public class TimeTask {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-ddHH");
                 String model = Paths.get(predictionPath, list.get(i).getString("name_en"), "encapsulation.py").toString();
                 String output = Paths.get(predictionPath, list.get(i).getString("name_en"), "result.json").toString();;
-                String timeParam = simpleDateFormat.format(new Date()) + ":00:00";
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(new Date());
+                calendar.add(Calendar.HOUR_OF_DAY, -1);
+                String timeParam = simpleDateFormat.format(calendar.getTime()) + ":00:00";
                 List<String> c = new ArrayList<>();
                 c.add("cmd");
                 c.add("/c");
@@ -165,7 +168,10 @@ public class TimeTask {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-ddHH");
                 String model = Paths.get(predictionPath, list.get(i).getString("name_en"), "encapsulation.py").toString();
                 String output = Paths.get(predictionPath, list.get(i).getString("name_en"), "result.json").toString();;
-                String timeParam = simpleDateFormat.format(new Date()) + ":00:00";
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(new Date());
+                calendar.add(Calendar.HOUR_OF_DAY, -1);
+                String timeParam = simpleDateFormat.format(calendar.getTime()) + ":00:00";
                 List<String> c = new ArrayList<>();
                 c.add("cmd");
                 c.add("/c");
@@ -201,7 +207,10 @@ public class TimeTask {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-ddHH");
                 String model = Paths.get(predictionPath, list.get(i).getString("name_en"), "encapsulation.py").toString();
                 String output = Paths.get(predictionPath, list.get(i).getString("name_en"), "result.json").toString();;
-                String timeParam = simpleDateFormat.format(new Date()) + ":00:00";
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(new Date());
+                calendar.add(Calendar.HOUR_OF_DAY, -1);
+                String timeParam = simpleDateFormat.format(calendar.getTime()) + ":00:00";
                 List<String> c = new ArrayList<>();
                 c.add("cmd");
                 c.add("/c");
@@ -248,7 +257,10 @@ public class TimeTask {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-ddHH");
                 String model = Paths.get(predictionPath, list.get(i).getString("name_en"), "encapsulation.py").toString();
                 String output = Paths.get(predictionPath, list.get(i).getString("name_en"), "result.json").toString();
-                String timeParam = simpleDateFormat.format(new Date()) + ":00:00";
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(new Date());
+                calendar.add(Calendar.HOUR_OF_DAY, -1);
+                String timeParam = simpleDateFormat.format(calendar.getTime()) + ":00:00";
                 List<String> c = new ArrayList<>();
                 c.add("cmd");
                 c.add("/c");
