@@ -14,11 +14,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URLEncoder;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -38,6 +36,9 @@ public class DownloadServiceImpl implements DownloadService {
 
     @Value("${singleFileDir}")
     String singleFileDir;
+
+    @Value("${tempDir}")
+    String tempDir;
 
     @Override
     public void downloadOne(String fileName, HttpServletResponse response, int flag) {
@@ -207,6 +208,36 @@ public class DownloadServiceImpl implements DownloadService {
         } catch (Exception e) {
             log.error(e.getMessage());
             throw new MyException(ResultEnum.DEFAULT_EXCEPTION);
+        }
+    }
+
+    @Override
+    public void downloadByStation(String station, HttpServletResponse response) {
+        String path1 = Paths.get(basedir, station + ".zip").toString();
+        String path2 = Paths.get(utcDataPath, station + "UTC+8.zip").toString();
+        List<String> addresses = new ArrayList<>();
+        addresses.add(path1);
+        addresses.add(path2);
+        String id = UUID.randomUUID().toString();
+        FileUtil.compressFile(Paths.get(tempDir, id + ".zip").toString(), addresses);
+        File file = new File(Paths.get(tempDir, id + ".zip").toString());
+        try {
+            response.setContentType("application/octet-stream");
+            response.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(station + ".zip", "UTF-8"));
+            response.addHeader("Content-Length", "" + file.length());
+            InputStream in = new FileInputStream(file);
+            ServletOutputStream sos = response.getOutputStream();
+            byte[] b = new byte[1024];
+            int len;
+            while((len = in.read(b)) > 0) {
+                sos.write(b, 0, len);
+            }
+            sos.flush();
+            sos.close();
+            in.close();
+            file.delete();
+        } catch (Exception e) {
+            log.error(e.getMessage());
         }
     }
 }

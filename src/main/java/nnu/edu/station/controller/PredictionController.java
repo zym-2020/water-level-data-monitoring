@@ -26,4 +26,9 @@ public class PredictionController {
     public JsonResult getPrediction(@PathVariable String stationName) {
         return ResultUtils.success(predictionService.getPrediction(stationName));
     }
+
+    @RequestMapping(value = "/getAllPrediction", method = RequestMethod.GET)
+    public JsonResult getAllPrediction() {
+        return ResultUtils.success(predictionService.getAllPrediction());
+    }
 }
