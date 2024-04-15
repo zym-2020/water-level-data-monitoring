@@ -31,4 +31,9 @@ public class AnhuiController {
     public JsonResult getInfoByStationAndTime(@PathVariable String station, @PathVariable String startTime, @PathVariable String endTime) {
         return ResultUtils.success(anhuiService.getInfoByStationAndTime(station, startTime, endTime));
     }
+
+    @RequestMapping(value = "/getDataBeforeTime/{station}/{timestamp}", method = RequestMethod.GET)
+    public JsonResult getDataBeforeTime(@PathVariable String station, @PathVariable Long timestamp) {
+        return ResultUtils.success(anhuiService.getDataBeforeTime(station, timestamp));
+    }
 }

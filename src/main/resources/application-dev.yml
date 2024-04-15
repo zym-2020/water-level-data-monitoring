@@ -1,8 +1,7 @@
 spring:
   datasource:
-    level:
-      jdbc-url: jdbc:sqlite:D:\zhuomian\水科院\python\水位\water_level.db
-      driver-class-name: org.sqlite.JDBC
+    url: jdbc:sqlite:D:\zhuomian\水科院\python\水位\water_level.db
+    driver-class-name: org.sqlite.JDBC
 
 pythondir:
   E:/github/station/resource/

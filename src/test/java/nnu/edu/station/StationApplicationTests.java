@@ -14,9 +14,6 @@ import java.util.Date;
 @SpringBootTest
 class StationApplicationTests {
 
-    @Test
-    void contextLoads() {
 
-    }
 
 }

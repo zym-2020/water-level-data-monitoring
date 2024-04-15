@@ -1,8 +1,8 @@
 spring:
   datasource:
-    level:
-      jdbc-url: jdbc:sqlite:C:\water_level_data\water_level.db
-      driver-class-name: org.sqlite.JDBC
+    url: jdbc:sqlite:C:\water_level_data\water_level.db
+    driver-class-name: org.sqlite.JDBC
+
 
 pythondir:
   C:/water_level_data/
@@ -18,6 +18,8 @@ singleFileDir:
   C:/water_level_data/all/
 waterleveldb:
   C:/water_level_data/water_level.db
+
+
 stationnamejson:
   C:/water_level_data/station_name.json
 

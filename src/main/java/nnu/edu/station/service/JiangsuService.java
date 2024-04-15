@@ -14,4 +14,6 @@ public interface JiangsuService {
     List<Map<String, Object>> getInfoByStation(String station);
 
     List<Map<String, Object>> getInfoByStationAndTime(String station, String startTime, String endTime);
+
+    List<Map<String, Object>> getDataBeforeTime(String station, Long timestamp);
 }

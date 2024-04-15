@@ -1,26 +1,19 @@
 package nnu.edu.station.common.config;
 
-import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import lombok.extern.slf4j.Slf4j;
-import nnu.edu.station.common.exception.MyException;
-import nnu.edu.station.common.result.ResultEnum;
 import nnu.edu.station.common.utils.FileUtil;
-import nnu.edu.station.common.utils.PredictionUtil;
 import nnu.edu.station.common.utils.ProcessUtil;
-import nnu.edu.station.dao.level.*;
+import nnu.edu.station.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -124,22 +117,22 @@ public class TimeTask {
             Process start = ProcessUtil.exeProcess(commands);
             ProcessUtil.readProcessOutput(start.getInputStream(), System.out);
             start.waitFor();
-            Map<String, List<JSONObject>> map = PredictionUtil.getPredictionStationList(stationNameJson);
-            List<JSONObject> list = map.get("yangtze");
-            for(int i = 0; i < list.size(); i++) {
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-ddHH");
-                String model = Paths.get(predictionPath, list.get(i).getString("name_en"), "encapsulation.py").toString();
-                String output = Paths.get(predictionPath, list.get(i).getString("name_en"), "result.json").toString();;
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(new Date());
-                calendar.add(Calendar.HOUR_OF_DAY, -1);
-                String timeParam = simpleDateFormat.format(calendar.getTime()) + ":00:00";
-                List<String> c = new ArrayList<>();
-                c.add("cmd");
-                c.add("/c");
-                c.add(python + " " + model + " " + timeParam + " " + output);
-                ProcessUtil.readProcessOutput(ProcessUtil.exeProcess(c).getInputStream(), System.out);
-            }
+//            Map<String, List<JSONObject>> map = PredictionUtil.getPredictionStationList(stationNameJson);
+//            List<JSONObject> list = map.get("yangtze");
+//            for(int i = 0; i < list.size(); i++) {
+//                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-ddHH");
+//                String model = Paths.get(predictionPath, list.get(i).getString("name_en"), "encapsulation.py").toString();
+//                String output = Paths.get(predictionPath, list.get(i).getString("name_en"), "result.json").toString();;
+//                Calendar calendar = Calendar.getInstance();
+//                calendar.setTime(new Date());
+//                calendar.add(Calendar.HOUR_OF_DAY, -1);
+//                String timeParam = simpleDateFormat.format(calendar.getTime()) + ":00:00";
+//                List<String> c = new ArrayList<>();
+//                c.add("cmd");
+//                c.add("/c");
+//                c.add(python + " " + model + " " + timeParam + " " + output);
+//                ProcessUtil.readProcessOutput(ProcessUtil.exeProcess(c).getInputStream(), System.out);
+//            }
         } catch (Exception e) {
             log.error(e.getMessage());
         }
@@ -162,22 +155,22 @@ public class TimeTask {
             Process start = ProcessUtil.exeProcess(commands);
             ProcessUtil.readProcessOutput(start.getInputStream(), System.out);
             start.waitFor();
-            Map<String, List<JSONObject>> map = PredictionUtil.getPredictionStationList(stationNameJson);
-            List<JSONObject> list = map.get("zhejiang");
-            for(int i = 0; i < list.size(); i++) {
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-ddHH");
-                String model = Paths.get(predictionPath, list.get(i).getString("name_en"), "encapsulation.py").toString();
-                String output = Paths.get(predictionPath, list.get(i).getString("name_en"), "result.json").toString();;
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(new Date());
-                calendar.add(Calendar.HOUR_OF_DAY, -1);
-                String timeParam = simpleDateFormat.format(calendar.getTime()) + ":00:00";
-                List<String> c = new ArrayList<>();
-                c.add("cmd");
-                c.add("/c");
-                c.add(python + " " + model + " " + timeParam + " " + output);
-                ProcessUtil.readProcessOutput(ProcessUtil.exeProcess(c).getInputStream(), System.out);
-            }
+//            Map<String, List<JSONObject>> map = PredictionUtil.getPredictionStationList(stationNameJson);
+//            List<JSONObject> list = map.get("zhejiang");
+//            for(int i = 0; i < list.size(); i++) {
+//                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-ddHH");
+//                String model = Paths.get(predictionPath, list.get(i).getString("name_en"), "encapsulation.py").toString();
+//                String output = Paths.get(predictionPath, list.get(i).getString("name_en"), "result.json").toString();;
+//                Calendar calendar = Calendar.getInstance();
+//                calendar.setTime(new Date());
+//                calendar.add(Calendar.HOUR_OF_DAY, -1);
+//                String timeParam = simpleDateFormat.format(calendar.getTime()) + ":00:00";
+//                List<String> c = new ArrayList<>();
+//                c.add("cmd");
+//                c.add("/c");
+//                c.add(python + " " + model + " " + timeParam + " " + output);
+//                ProcessUtil.readProcessOutput(ProcessUtil.exeProcess(c).getInputStream(), System.out);
+//            }
 
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -201,22 +194,22 @@ public class TimeTask {
             Process start = ProcessUtil.exeProcess(commands);
             ProcessUtil.readProcessOutput(start.getInputStream(), System.out);
             start.waitFor();
-            Map<String, List<JSONObject>> map = PredictionUtil.getPredictionStationList(stationNameJson);
-            List<JSONObject> list = map.get("anhui");
-            for(int i = 0; i < list.size(); i++) {
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-ddHH");
-                String model = Paths.get(predictionPath, list.get(i).getString("name_en"), "encapsulation.py").toString();
-                String output = Paths.get(predictionPath, list.get(i).getString("name_en"), "result.json").toString();;
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(new Date());
-                calendar.add(Calendar.HOUR_OF_DAY, -1);
-                String timeParam = simpleDateFormat.format(calendar.getTime()) + ":00:00";
-                List<String> c = new ArrayList<>();
-                c.add("cmd");
-                c.add("/c");
-                c.add(python + " " + model + " " + timeParam + " " + output);
-                ProcessUtil.readProcessOutput(ProcessUtil.exeProcess(c).getInputStream(), System.out);
-            }
+//            Map<String, List<JSONObject>> map = PredictionUtil.getPredictionStationList(stationNameJson);
+//            List<JSONObject> list = map.get("anhui");
+//            for(int i = 0; i < list.size(); i++) {
+//                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-ddHH");
+//                String model = Paths.get(predictionPath, list.get(i).getString("name_en"), "encapsulation.py").toString();
+//                String output = Paths.get(predictionPath, list.get(i).getString("name_en"), "result.json").toString();;
+//                Calendar calendar = Calendar.getInstance();
+//                calendar.setTime(new Date());
+//                calendar.add(Calendar.HOUR_OF_DAY, -1);
+//                String timeParam = simpleDateFormat.format(calendar.getTime()) + ":00:00";
+//                List<String> c = new ArrayList<>();
+//                c.add("cmd");
+//                c.add("/c");
+//                c.add(python + " " + model + " " + timeParam + " " + output);
+//                ProcessUtil.readProcessOutput(ProcessUtil.exeProcess(c).getInputStream(), System.out);
+//            }
         } catch (Exception e) {
             log.error(e.getMessage());
         }
@@ -243,34 +236,35 @@ public class TimeTask {
             log.error(e.getMessage());
         }
     }
-    @Scheduled(cron = "0 30 * * * ?")
-    public void predictJiangsu() {
-        try {
-            /**
-             * @Description:江苏预报
-             * @Author: Yiming
-             * @Date: 2023/2/8
-             */
-            Map<String, List<JSONObject>> map = PredictionUtil.getPredictionStationList(stationNameJson);
-            List<JSONObject> list = map.get("jiangsu");
-            for(int i = 0; i < list.size(); i++) {
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-ddHH");
-                String model = Paths.get(predictionPath, list.get(i).getString("name_en"), "encapsulation.py").toString();
-                String output = Paths.get(predictionPath, list.get(i).getString("name_en"), "result.json").toString();
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(new Date());
-                calendar.add(Calendar.HOUR_OF_DAY, -1);
-                String timeParam = simpleDateFormat.format(calendar.getTime()) + ":00:00";
-                List<String> c = new ArrayList<>();
-                c.add("cmd");
-                c.add("/c");
-                c.add(python + " " + model + " " + timeParam + " " + output);
-                ProcessUtil.readProcessOutput(ProcessUtil.exeProcess(c).getInputStream(), System.out);
-            }
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
-    }
+
+//    @Scheduled(cron = "0 30 * * * ?")
+//    public void predictJiangsu() {
+//        try {
+//            /**
+//             * @Description:江苏预报
+//             * @Author: Yiming
+//             * @Date: 2023/2/8
+//             */
+//            Map<String, List<JSONObject>> map = PredictionUtil.getPredictionStationList(stationNameJson);
+//            List<JSONObject> list = map.get("jiangsu");
+//            for(int i = 0; i < list.size(); i++) {
+//                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-ddHH");
+//                String model = Paths.get(predictionPath, list.get(i).getString("name_en"), "encapsulation.py").toString();
+//                String output = Paths.get(predictionPath, list.get(i).getString("name_en"), "result.json").toString();
+//                Calendar calendar = Calendar.getInstance();
+//                calendar.setTime(new Date());
+//                calendar.add(Calendar.HOUR_OF_DAY, -1);
+//                String timeParam = simpleDateFormat.format(calendar.getTime()) + ":00:00";
+//                List<String> c = new ArrayList<>();
+//                c.add("cmd");
+//                c.add("/c");
+//                c.add(python + " " + model + " " + timeParam + " " + output);
+//                ProcessUtil.readProcessOutput(ProcessUtil.exeProcess(c).getInputStream(), System.out);
+//            }
+//        } catch (Exception e) {
+//            log.error(e.getMessage());
+//        }
+//    }
 
     @Scheduled(cron = "0 30 * * * ?")
     public void executePythonHubei() {
@@ -470,15 +464,6 @@ public class TimeTask {
             addresses.add(fileAddress);
             FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
 
-            String str = "";
-            for (Map<String, Object> map : infoList) {
-                str = str + map.get("time").toString();
-                for (String key : keys) {
-                    str = str + "\t" + map.get(key);
-                }
-                str += "\n";
-            }
-            FileUtil.addFileContent(str, singleFileDir + name + ".txt");
         }
 
         /**
@@ -504,15 +489,6 @@ public class TimeTask {
             addresses.add(fileAddress);
             FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
 
-            String str = "";
-            for (Map<String, Object> map : infoList) {
-                str = str + map.get("time").toString();
-                for (String key : keys) {
-                    str = str + "\t" + map.get(key);
-                }
-                str += "\n";
-            }
-            FileUtil.addFileContent(str, singleFileDir + name + ".txt");
         }
 
         /**
@@ -538,15 +514,6 @@ public class TimeTask {
             addresses.add(fileAddress);
             FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
 
-            String str = "";
-            for (Map<String, Object> map : infoList) {
-                str = str + map.get("time").toString();
-                for (String key : keys) {
-                    str = str + "\t" + map.get(key);
-                }
-                str += "\n";
-            }
-            FileUtil.addFileContent(str, singleFileDir + name + ".txt");
         }
 
         /**
@@ -572,15 +539,6 @@ public class TimeTask {
             addresses.add(fileAddress);
             FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
 
-            String str = "";
-            for (Map<String, Object> map : infoList) {
-                str = str + map.get("time").toString();
-                for (String key : keys) {
-                    str = str + "\t" + map.get(key);
-                }
-                str += "\n";
-            }
-            FileUtil.addFileContent(str, singleFileDir + name + ".txt");
         }
 
         /**
@@ -606,15 +564,6 @@ public class TimeTask {
             addresses.add(fileAddress);
             FileUtil.saveFile(infoList, fileAddress, keys, keys_cn);
 
-            String str = "";
-            for (Map<String, Object> map : infoList) {
-                str = str + map.get("time").toString();
-                for (String key : keys) {
-                    str = str + "\t" + map.get(key);
-                }
-                str += "\n";
-            }
-            FileUtil.addFileContent(str, singleFileDir + name + ".txt");
         }
 
 
@@ -629,6 +578,48 @@ public class TimeTask {
         String destination = utcDataPath + "allUTC+8.zip";
         FileUtil.compressFile(destination, addresses);
 
+    }
+
+    @Scheduled(cron = "0 0 3 * * ?")
+    public void executeSaveAllData() {
+        LocalDate currentDate = LocalDate.now();  // 获取当前日期
+        LocalDate previousDate = currentDate.minusDays(1);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String endTime = currentDate.format(formatter) + " 00:00:00";
+        String startTime = previousDate.format(formatter) + " 00:00:01";
+        JSONArray jsonArray = FileUtil.readJsonArrayFile(stationNameJson);
+        for (int i = 0; i < jsonArray.size(); i++) {
+            String station = jsonArray.getJSONObject(i).getString("name");
+            String name = jsonArray.getJSONObject(i).getString("name_en");
+            String[] keys = jsonArray.getJSONObject(i).getJSONArray("keys").toArray(String.class);
+            List<Map<String, Object>> data;
+            switch (jsonArray.getJSONObject(i).getString("type")) {
+                case "yangtze":
+                    data = yangtzeDownstreamMapper.getInfoByStationAndTime(station, startTime, endTime);
+                    break;
+                case "jiangsu":
+                    data = jiangsuMapper.getInfoByStationAndTime(station, startTime, endTime);
+                    break;
+                case "anhui":
+                    data = anhuiMapper.getInfoByStationAndTime(station, startTime, endTime);
+                    break;
+                case "zhejiang":
+                    data = zhejiangMapper.getInfoByStationAndTime(station, startTime, endTime);
+                    break;
+                default:
+                    data = hubeiMapper.getInfoByStationAndTime(station, startTime, endTime);
+                    break;
+            }
+            String str = "";
+            for (Map<String, Object> map : data) {
+                str = str + map.get("time").toString();
+                for (String key : keys) {
+                    str = str + "\t" + map.get(key);
+                }
+                str += "\n";
+            }
+            FileUtil.addFileContent(str, singleFileDir + name + ".txt");
+        }
     }
 
 }

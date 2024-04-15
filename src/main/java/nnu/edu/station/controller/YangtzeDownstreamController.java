@@ -33,4 +33,9 @@ public class YangtzeDownstreamController {
         return ResultUtils.success(yangtzeDownstreamService.getInfoByStationAndTime(station, startTime, endTime));
     }
 
+    @RequestMapping(value = "/getDataBeforeTime/{station}/{timestamp}", method = RequestMethod.GET)
+    public JsonResult getDataBeforeTime(@PathVariable String station, @PathVariable Long timestamp) {
+        return ResultUtils.success(yangtzeDownstreamService.getDataBeforeTime(station, timestamp));
+    }
+
 }

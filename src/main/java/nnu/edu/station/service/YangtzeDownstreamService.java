@@ -16,4 +16,6 @@ public interface YangtzeDownstreamService {
 
     List<Map<String, Object>> getInfoByStationAndTime(String station, String startTime, String endTime);
 
+    List<Map<String, Object>> getDataBeforeTime(String station, Long timestamp);
+
 }
