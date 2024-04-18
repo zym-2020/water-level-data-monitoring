@@ -23,7 +23,7 @@ public class YangtzeDownstreamController {
     @Autowired
     YangtzeDownstreamService yangtzeDownstreamService;
 
-    @RequestMapping(value = "/getAllInfoByStation/{station}", method = RequestMethod.GET)
+    @RequestMapping(value = "/getInfoByStation/{station}", method = RequestMethod.GET)
     public JsonResult getAllInfoByStation(@PathVariable String station) {
         return ResultUtils.success(yangtzeDownstreamService.getAllInfoByStation(station));
     }

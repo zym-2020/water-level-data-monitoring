@@ -4,15 +4,15 @@ import lombok.extern.slf4j.Slf4j;
 import nnu.edu.station.common.exception.MyException;
 import nnu.edu.station.common.result.ResultEnum;
 import nnu.edu.station.common.utils.FileUtil;
+import nnu.edu.station.dao.*;
 import nnu.edu.station.service.DownloadService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URLEncoder;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
@@ -39,6 +39,21 @@ public class DownloadServiceImpl implements DownloadService {
 
     @Value("${tempDir}")
     String tempDir;
+
+    @Autowired
+    YangtzeDownstreamMapper yangtzeDownstreamMapper;
+
+    @Autowired
+    JiangsuMapper jiangsuMapper;
+
+    @Autowired
+    AnhuiMapper anhuiMapper;
+
+    @Autowired
+    ZhejiangMapper zhejiangMapper;
+
+    @Autowired
+    HubeiMapper hubeiMapper;
 
     @Override
     public void downloadOne(String fileName, HttpServletResponse response, int flag) {
@@ -239,5 +254,78 @@ public class DownloadServiceImpl implements DownloadService {
         } catch (Exception e) {
             log.error(e.getMessage());
         }
+    }
+
+    @Override
+    public void downloadNow(String type, String stationName, HttpServletResponse response) throws IOException {
+        String tempPath = Paths.get(tempDir, stationName + ".txt").toString();
+        List<Map<String, Object>> data;
+        switch (type) {
+            case "yangtze":
+                data = yangtzeDownstreamMapper.getAllInfoByStation(stationName);
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempPath))) {
+                    for (Map<String, Object> map : data) {
+                        writer.write(map.get("time") + "\t" + map.get("flow") + "\t" + map.get("waterLevel") + "\n");
+                    }
+                } catch (IOException e) {
+                    log.error("写入文件时出现错误：" + e.getMessage());
+                }
+                break;
+            case "jiangsu":
+                data = jiangsuMapper.getInfoByStation(stationName);
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempPath))) {
+                    for (Map<String, Object> map : data) {
+                        writer.write(map.get("time") + "\t" + map.get("upstreamWaterLevel") + "\t" + map.get("downstreamWaterLevel") + "\t" + map.get("flow") + "\n");
+                    }
+                } catch (IOException e) {
+                    log.error("写入文件时出现错误：" + e.getMessage());
+                }
+                break;
+            case "anhui":
+                data = anhuiMapper.getInfoByStation(stationName);
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempPath))) {
+                    for (Map<String, Object> map : data) {
+                        writer.write(map.get("time") + "\t" + map.get("waterLevel") + "\t" + map.get("flow") + "\n");
+                    }
+                } catch (IOException e) {
+                    log.error("写入文件时出现错误：" + e.getMessage());
+                }
+                break;
+            case "zhejiang":
+                data = zhejiangMapper.getInfoByStation(stationName);
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempPath))) {
+                    for (Map<String, Object> map : data) {
+                        writer.write(map.get("time") + "\t" + map.get("rainfall") + "\t" + map.get("waterLevel") + "\t" + map.get("input") + "\t" + map.get("output") + "\n");
+                    }
+                } catch (IOException e) {
+                    log.error("写入文件时出现错误：" + e.getMessage());
+                }
+                break;
+            default:
+                data = hubeiMapper.getInfoByStation(stationName);
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempPath))) {
+                    for (Map<String, Object> map : data) {
+                        writer.write(map.get("time") + "\t" + map.get("waterLevel") + "\t" + map.get("flow") + "\n");
+                    }
+                } catch (IOException e) {
+                    log.error("写入文件时出现错误：" + e.getMessage());
+                }
+                break;
+        }
+        File file = new File(tempPath);
+        response.setContentType("application/octet-stream");
+        response.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(stationName + ".txt", "UTF-8"));
+        response.addHeader("Content-Length", "" + file.length());
+        InputStream in = new FileInputStream(file);
+        ServletOutputStream sos = response.getOutputStream();
+        byte[] b = new byte[1024];
+        int len;
+        while((len = in.read(b)) > 0) {
+            sos.write(b, 0, len);
+        }
+        sos.flush();
+        sos.close();
+        in.close();
+
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -70,5 +71,10 @@ public class DownloadController {
     @RequestMapping(value = "/downloadByStation/{station}", method = RequestMethod.GET)
     public void downloadByStation(@PathVariable String station, HttpServletResponse response) {
         downloadService.downloadByStation(station, response);
+    }
+
+    @RequestMapping(value = "/downloadNow/{type}/{stationName}", method = RequestMethod.GET)
+    public void downloadNow(@PathVariable String type, @PathVariable String stationName, HttpServletResponse response) throws IOException {
+        downloadService.downloadNow(type, stationName, response);
     }
 }

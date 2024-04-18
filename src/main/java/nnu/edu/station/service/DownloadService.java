@@ -1,6 +1,8 @@
 package nnu.edu.station.service;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -21,4 +23,6 @@ public interface DownloadService {
     void downloadAllBySingleFile(String stationName, HttpServletResponse response);
 
     void downloadByStation(String station, HttpServletResponse response);
+
+    void downloadNow(String type, String stationName, HttpServletResponse response) throws IOException;
 }

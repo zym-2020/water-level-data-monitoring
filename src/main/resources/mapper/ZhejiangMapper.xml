@@ -3,7 +3,7 @@
 <mapper namespace="nnu.edu.station.dao.ZhejiangMapper">
     <select id="getInfoByStation" resultType="java.util.Map">
         select time, station, water_level as "waterLevel", rainfall, output, input, capacity from zhejiang_station
-        where station = #{station}
+        where station = #{station} order by time asc
     </select>
 
     <select id="getInfoByStationAndTime" resultType="java.util.Map">
