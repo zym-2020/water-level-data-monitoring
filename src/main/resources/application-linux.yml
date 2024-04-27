@@ -1,0 +1,59 @@
+spring:
+  datasource:
+    url: jdbc:sqlite:/usr/local/resource/station1/water_level.db
+    driver-class-name: org.sqlite.JDBC
+
+
+pythondir:
+  /usr/local/resource/station1/
+python:
+  python3
+basedir:
+  /usr/local/resource/station1/data/
+tempDir:
+  /usr/local/resource/station1/temp/
+data-path:
+  /usr/local/resource/station1/utc+8_data/
+singleFileDir:
+  /usr/local/resource/station1/all/
+waterleveldb:
+  /usr/local/resource/station1/water_level.db
+
+
+stationnamejson:
+  /usr/local/resource/station1/station_name.json
+
+waterlevellog:
+  /usr/local/resource/station1/yangtze_downstream_log.txt
+yangtzeDownstreamStationJson:
+  /usr/local/resource/station1/yangtze_downstream_station.json
+
+
+zhejianglog:
+  /usr/local/resource/station1/zhejiang_log.txt
+zhejiangjson:
+  /usr/local/resource/station1/zhejiang_station.json
+
+anhuilog:
+  /usr/local/resource/station1/anhui_log.txt
+anhuijson:
+  /usr/local/resource/station1/nodescript/station.json
+nodescriptpath:
+  /usr/local/resource/station1/nodescript/
+
+jiangsulog:
+  /usr/local/resource/station1/jiangsu_log.txt
+jiangsujson:
+  /usr/local/resource/station1/jiangsu_station.json
+pngpath:
+  /usr/local/resource/station1/png/
+
+hubeiLog:
+  /usr/local/resource/station1/hubei_log.txt
+hubeiJson:
+  /usr/local/resource/station1/hubei_station.json
+
+#水位预报模型地址
+predictionPath: /usr/local/resource/station1/prediction/
+
+
