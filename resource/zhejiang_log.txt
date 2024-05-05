@@ -922,3 +922,5 @@ Backtrace:
 
 2023-05-02 04:30	Message: 'msedgedriver' executable needs to be in PATH. Please download from https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/
 
+2024-05-05 16:30	Message: 'msedgedriver' executable may have wrong permissions. Please download from https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/
+

@@ -50,7 +50,7 @@ const insertData = (dbpath, waterLevelList, flowList, stationName) => {
         else {
           if (row.length == 0) {
             db.run(
-              `insert into anhui_station values('${
+              `insert or ignore into anhui_station values('${
                 waterLevelList[i].TM + ":00"
               }', '${stationName}', ${waterLevelList[i].Z}, null)`,
               (err) => {
@@ -72,7 +72,7 @@ const insertData = (dbpath, waterLevelList, flowList, stationName) => {
         else {
           if (row.length == 0) {
             db.run(
-              `insert into anhui_station values('${
+              `insert or ignore into anhui_station values('${
                 flowList[i].TM + ":00"
               }', '${stationName}', null, ${flowList[i].Q})`,
               (err) => {
@@ -121,9 +121,11 @@ const getInfo = (dbpath, formData, stationName) => {
 const execute = (jsonPath, dbpath) => {
   const data = JSON.parse(fs.readFileSync(jsonPath, "utf8"));
   for (let i = 0; i < data.length; i++) {
+	const temp = new Date()
     const startDate = new Date();
+	startDate.setTime(temp.getTime() - 3600000 * 12)
     const endDate = new Date();
-    endDate.setTime(startDate.getTime() + 3600000);
+    endDate.setTime(temp.getTime() + 3600000);
     const formData = {
       name: waterSecurity.encode(data[i].name),
       stcd: waterSecurity.encode(data[i].stcd),

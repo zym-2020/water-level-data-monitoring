@@ -52,7 +52,7 @@ def execute(json_path, db_path, png_path):
                     result = cur.fetchall()
                     if len(result) == 0:
                         tup = param_util(item['range'], result_list[i], item['name'])
-                        cur.execute("insert into jiangsu_station values(?,?,?,?,?)", tup)
+                        cur.execute("insert or ignore into jiangsu_station values(?,?,?,?,?)", tup)
                         conn.commit()
         cur.close()
         conn.close()

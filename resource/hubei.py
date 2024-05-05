@@ -38,7 +38,7 @@ def execute(json_path, db_path):
                     cur.execute("select * from hubei_station where time = ? and  station = ?", (t, name))
                     res_list = cur.fetchall()
                     if len(res_list) == 0:
-                        cur.execute("insert into hubei_station values(?,?,?,?)", (t, name, water_level, flow))
+                        cur.execute("insert or ignore into hubei_station values(?,?,?,?)", (t, name, water_level, flow))
                         conn.commit()
                 elif item['STNM1'] == station['name']:
                     t = date + ":00"
@@ -48,7 +48,7 @@ def execute(json_path, db_path):
                     cur.execute("select * from hubei_station where time = ? and  station = ?", (t, name))
                     res_list = cur.fetchall()
                     if len(res_list) == 0:
-                        cur.execute("insert into hubei_station values(?,?,?,?)", (t, name, water_level, flow))
+                        cur.execute("insert or ignore into hubei_station values(?,?,?,?)", (t, name, water_level, flow))
                         conn.commit()
     cur.close()
     conn.close()

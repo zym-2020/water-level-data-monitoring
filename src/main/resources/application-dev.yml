@@ -1,7 +1,20 @@
 spring:
   datasource:
-    url: jdbc:sqlite:D:\zhuomian\水科院\python\水位\water_level.db
-    driver-class-name: org.sqlite.JDBC
+    yangtze-downstream:
+      jdbc-url: jdbc:sqlite:D:/zhuomian/database/yangtze_downstream.db
+      driver-class-name: org.sqlite.JDBC
+    zhejiang:
+      jdbc-url: jdbc:sqlite:D:/zhuomian/database/zhejiang.db
+      driver-class-name: org.sqlite.JDBC
+    jiangsu:
+      jdbc-url: jdbc:sqlite:D:/zhuomian/database/jiangsu.db
+      driver-class-name: org.sqlite.JDBC
+    anhui:
+      jdbc-url: jdbc:sqlite:D:/zhuomian/database/anhui.db
+      driver-class-name: org.sqlite.JDBC
+    hubei:
+      jdbc-url: jdbc:sqlite:D:/zhuomian/database/hubei.db
+      driver-class-name: org.sqlite.JDBC
 
 pythondir:
   E:/github/station/resource/
@@ -9,12 +22,12 @@ python:
   python
 basedir:
   E:/github/station/resource/data/
+tempDir:
+  E:/github/station/resource/temp/
 data-path:
   E:/github/station/resource/utc+8_data/
 singleFileDir:
   E:/github/station/resource/all/
-waterleveldb:
-  E:/github/station/resource/water_level.db
 stationnamejson:
   E:/github/station/resource/station_name.json
 
@@ -24,12 +37,16 @@ waterlevellog:
   E:/github/station/resource/yangtze_downstream_log.txt
 yangtzeDownstreamStationJson:
   E:/github/station/resource/yangtze_downstream_station.json
+yangtzeDownstreamDb:
+  D:/zhuomian/database/yangtze_downstream.db
 
 #浙江水情网
 zhejianglog:
   E:/github/station/resource/zhejiang_log.txt
 zhejiangjson:
   E:/github/station/resource/zhejiang_station.json
+zhejiangDb:
+  D:/zhuomian/database/zhejiang.db
 
 #安徽水情网
 anhuilog:
@@ -38,6 +55,9 @@ anhuijson:
   E:/github/station/resource/nodescript/station.json
 nodescriptpath:
   E:/github/station/resource/nodescript/
+anhuiDb:
+  D:/zhuomian/database/anhui.db
+
 
 #江苏水情网
 jiangsulog:
@@ -46,12 +66,16 @@ jiangsujson:
   E:/github/station/resource/jiangsu_station.json
 pngpath:
   E:/github/station/resource/png/
+jiangsuDb:
+  D:/zhuomian/database/jiangsu.db
 
 #湖北水情网
 hubeiLog:
   E:/github/station/resource/hubei_log.txt
 hubeiJson:
   E:/github/station/resource/hubei_station.json
+hubeiDb:
+  D:/zhuomian/database/hubei.db
 
 
 

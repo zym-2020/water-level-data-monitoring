@@ -16,8 +16,6 @@ data-path:
   C:/water_level_data/utc+8_data/
 singleFileDir:
   C:/water_level_data/all/
-waterleveldb:
-  C:/water_level_data/water_level.db
 
 
 stationnamejson:
@@ -27,17 +25,23 @@ waterlevellog:
   C:/water_level_data/yangtze_downstream_log.txt
 yangtzeDownstreamStationJson:
   C:/water_level_data/yangtze_downstream_station.json
+yangtzeDownstreamDb:
+  C:/water_level_data/yangtze_downstream.db
 
 
 zhejianglog:
   C:/water_level_data/zhejiang_log.txt
 zhejiangjson:
   C:/water_level_data/zhejiang_station.json
+zhejiangDb:
+  C:/water_level_data/zhejiang.db
 
 anhuilog:
   C:/water_level_data/anhui_log.txt
 anhuijson:
   C:/water_level_data/nodescript/station.json
+anhuiDb:
+  C:/water_level_data/anhui.db
 nodescriptpath:
   C:/water_level_data/nodescript/
 
@@ -47,11 +51,15 @@ jiangsujson:
   C:/water_level_data/jiangsu_station.json
 pngpath:
   C:/water_level_data/png/
+jiangsuDb:
+  C:/water_level_data/jiangsu.db
 
 hubeiLog:
   C:/water_level_data/hubei_log.txt
 hubeiJson:
   C:/water_level_data/hubei_station.json
+hubeiDb:
+  C:/water_level_data/hubei.db
 
 #水位预报模型地址
 predictionPath: C:/water_level_data/prediction/

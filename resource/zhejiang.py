@@ -17,8 +17,8 @@ def test():
     option = webdriver.EdgeOptions()
     option.add_argument("headless")
     driver = webdriver.Edge(options=option)
-    url1 = 'https://sqfb.zjsq.net.cn:8089/nuxtsyq/new/MarkInfo?zh=70702895&zm=%E5%B3%99%E5%8D%97&day=1'
-    url2 = 'https://sqfb.zjsq.net.cn:8089/nuxtsyq/new/MarkInfo?zh=63010950&zm=%E8%B5%B5%E6%B9%BE%E6%B0%B4%E5%BA%93&day=1'
+    url1 = 'https://sqfb.jhhk.zjsw.cn:8089/nuxtsyq/new/MarkInfo?zh=70702895&zm=%E5%B3%99%E5%8D%97&day=1'
+    url2 = 'https://sqfb.jhhk.zjsw.cn:8089/nuxtsyq/new/MarkInfo?zh=63010950&zm=%E8%B5%B5%E6%B9%BE%E6%B0%B4%E5%BA%93&day=1'
     # 潮汐，河道，堰闸
     # 河道、堰闸的基础信息与潮汐不同
     driver.get(url1)
@@ -138,7 +138,7 @@ def save_data(db_path, station_type, station_name, data_list):
         res_list = cur.fetchall()
         if len(res_list) == 0 and item['time'] is not None:
 
-            cur.execute("insert into zhejiang_station values(?,?,?,?,?,?,?)",
+            cur.execute("insert or ignore into zhejiang_station values(?,?,?,?,?,?,?)",
                         (item['time'], station_name,
                          item['rainfall'] if item['rainfall'] != '-' else None,
                          item['waterLevel'] if item['waterLevel'] != '-' else None,
@@ -155,7 +155,7 @@ def execute(json_path, db_path):
         json_data = json.load(f)
         count = 0
         for item in json_data:
-            url = 'https://sqfb.zjsq.net.cn:8089/nuxtsyq/new/MarkInfo?zh=' + item['zh'] + '&zm=' + item['zm'] + '&day=1'
+            url = 'https://sqfb.jhhk.zjsw.cn:8089/nuxtsyq/new/MarkInfo?zh=' + item['zh'] + '&zm=' + item['zm'] + '&day=1'
             station_type = item['zl']
             result_list = get_info(url, station_type)
             save_data(db_path, station_type, item['zm'], result_list)

@@ -16,8 +16,6 @@ data-path:
   /usr/local/resource/station1/utc+8_data/
 singleFileDir:
   /usr/local/resource/station1/all/
-waterleveldb:
-  /usr/local/resource/station1/water_level.db
 
 
 stationnamejson:
@@ -27,12 +25,16 @@ waterlevellog:
   /usr/local/resource/station1/yangtze_downstream_log.txt
 yangtzeDownstreamStationJson:
   /usr/local/resource/station1/yangtze_downstream_station.json
+yangtzeDownstreamDb:
+  /usr/local/resource/station1/yangtze_downstream.db
 
 
 zhejianglog:
   /usr/local/resource/station1/zhejiang_log.txt
 zhejiangjson:
   /usr/local/resource/station1/zhejiang_station.json
+zhejiangDb:
+  /usr/local/resource/station1/zhejiang.db
 
 anhuilog:
   /usr/local/resource/station1/anhui_log.txt
@@ -40,6 +42,8 @@ anhuijson:
   /usr/local/resource/station1/nodescript/station.json
 nodescriptpath:
   /usr/local/resource/station1/nodescript/
+anhuiDb:
+  /usr/local/resource/station1/anhui.db
 
 jiangsulog:
   /usr/local/resource/station1/jiangsu_log.txt
@@ -47,11 +51,15 @@ jiangsujson:
   /usr/local/resource/station1/jiangsu_station.json
 pngpath:
   /usr/local/resource/station1/png/
+jiangsuDb:
+  /usr/local/resource/station1/jiangsu.db
 
 hubeiLog:
   /usr/local/resource/station1/hubei_log.txt
 hubeiJson:
   /usr/local/resource/station1/hubei_station.json
+hubeiDb:
+  /usr/local/resource/station1/hubei.db
 
 #水位预报模型地址
 predictionPath: /usr/local/resource/station1/prediction/
