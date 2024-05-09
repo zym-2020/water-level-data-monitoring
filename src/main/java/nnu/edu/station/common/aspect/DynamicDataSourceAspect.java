@@ -1,7 +1,11 @@
 package nnu.edu.station.common.aspect;
 
+import lombok.extern.slf4j.Slf4j;
 import nnu.edu.station.common.config.DataSourceContextHolder;
+import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,6 +14,10 @@ import org.aspectj.lang.annotation.Before;
  * @Date: 2024/05/05/15:39
  * @Description:
  */
+@Order(1)
+@Aspect
+@Component
+@Slf4j
 public class DynamicDataSourceAspect {
     @Before("execution(* nnu.edu.station.dao.YangtzeDownstreamMapper.*(..))")
     public void switchYangtzeDownstream() {

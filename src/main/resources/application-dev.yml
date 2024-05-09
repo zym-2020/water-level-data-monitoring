@@ -27,7 +27,7 @@ tempDir:
 data-path:
   E:/github/station/resource/utc+8_data/
 singleFileDir:
-  E:/github/station/resource/all/
+  D:/zhuomian/all/
 stationnamejson:
   E:/github/station/resource/station_name.json
 

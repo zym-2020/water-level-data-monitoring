@@ -1,7 +1,20 @@
 spring:
   datasource:
-    url: jdbc:sqlite:C:\water_level_data\water_level.db
-    driver-class-name: org.sqlite.JDBC
+    yangtze-downstream:
+      jdbc-url: jdbc:sqlite:C:/water_level_data/yangtze_downstream.db
+      driver-class-name: org.sqlite.JDBC
+    zhejiang:
+      jdbc-url: jdbc:sqlite:C:/water_level_data/zhejiang.db
+      driver-class-name: org.sqlite.JDBC
+    jiangsu:
+      jdbc-url: jdbc:sqlite:C:/water_level_data/jiangsu.db
+      driver-class-name: org.sqlite.JDBC
+    anhui:
+      jdbc-url: jdbc:sqlite:C:/water_level_data/anhui.db
+      driver-class-name: org.sqlite.JDBC
+    hubei:
+      jdbc-url: jdbc:sqlite:C:/water_level_data/hubei.db
+      driver-class-name: org.sqlite.JDBC
 
 
 pythondir:
