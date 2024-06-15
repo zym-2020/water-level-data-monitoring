@@ -1,0 +1,34 @@
+[
+	{
+		"name": "九江",
+		"xpath": "//tbody[@id='sssq'][1]/tr[2]/td"
+	},
+	{
+		"name": "大通",
+		"xpath": "//tbody[@id='sssq'][1]/tr[7]/td"
+	},
+	{
+		"name": "汉口",
+		"xpath": "//tbody[@id='sssq'][1]/tr[1]/td"
+	},
+	{
+		"name": "八里江",
+		"xpath": "//tbody[@id='sssq'][1]/tr[3]/td"
+	},
+	{
+		"name": "彭泽",
+		"xpath": "//tbody[@id='sssq'][1]/tr[4]/td"
+	},
+	{
+		"name": "安庆",
+		"xpath": "//tbody[@id='sssq'][1]/tr[5]/td"
+	},
+	{
+		"name": "四号码头",
+		"xpath": "//tbody[@id='sssq'][1]/tr[11]/td"
+	},
+	{
+		"name": "南京水文站",
+		"xpath": "//tbody[@id='sssq'][1]/tr[10]/td"
+	}
+]

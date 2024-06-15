@@ -1,0 +1,26 @@
+2024-06-08 22:31	Message: unknown error: DevToolsActivePort file doesn't exist
+Stacktrace:
+Backtrace:
+	Microsoft::Applications::Events::EventProperties::SetProperty [0x00007FF7F60E16C2+15186]
+	Microsoft::Applications::Events::EventProperty::EventProperty [0x00007FF7F607A212+827554]
+	(No symbol) [0x00007FF7F5D3ED90]
+	(No symbol) [0x00007FF7F5D6F7AA]
+	(No symbol) [0x00007FF7F5D6AD50]
+	(No symbol) [0x00007FF7F5D660FC]
+	(No symbol) [0x00007FF7F5DA9C56]
+	(No symbol) [0x00007FF7F5DA1D23]
+	(No symbol) [0x00007FF7F5D73B80]
+	(No symbol) [0x00007FF7F5D72B0E]
+	(No symbol) [0x00007FF7F5D74344]
+	Microsoft::Applications::Events::EventProperties::SetProperty [0x00007FF7F5F5C3B0+182752]
+	(No symbol) [0x00007FF7F5E30095]
+	Microsoft::Applications::Events::EventProperty::EventProperty [0x00007FF7F5FBA6EA+42362]
+	Microsoft::Applications::Events::EventProperty::EventProperty [0x00007FF7F5FBD425+53941]
+	Microsoft::Applications::Events::ILogManager::DispatchEventBroadcast [0x00007FF7F62D8AB3+1456595]
+	Microsoft::Applications::Events::EventProperty::EventProperty [0x00007FF7F608276A+861690]
+	Microsoft::Applications::Events::EventProperty::EventProperty [0x00007FF7F6087854+882404]
+	Microsoft::Applications::Events::EventProperty::EventProperty [0x00007FF7F60879AC+882748]
+	Microsoft::Applications::Events::EventProperty::EventProperty [0x00007FF7F609097E+919566]
+	BaseThreadInitThunk [0x00007FFB08EA168D+13]
+	RtlUserThreadStart [0x00007FFB0AC44629+29]
+

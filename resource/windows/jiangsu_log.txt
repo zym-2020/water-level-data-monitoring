@@ -1,0 +1,7 @@
+﻿2024-05-08 01:00	HTTPConnectionPool(host='218.94.6.94', port=88): Max retries exceeded with url: /jsswxxSSI/static/map/chart/0/0c9a98f030a447fba37e86bfc067fb90_list.png?t=1715101200517 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000000AB7E568B80>: Failed to establish a new connection: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。'))
+2024-05-09 09:09	database is locked
+2024-05-10 10:12	database is locked
+2024-05-16 09:00	HTTPConnectionPool(host='218.94.6.94', port=88): Max retries exceeded with url: /jsswxxSSI/static/map/chart/0/0c9a98f030a447fba37e86bfc067fb90_list.png?t=1715821200529 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000000E30C0B9B80>: Failed to establish a new connection: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。'))
+2024-05-18 07:00	HTTPConnectionPool(host='218.94.6.94', port=88): Max retries exceeded with url: /jsswxxSSI/static/map/chart/0/bf8f9174623f43a885b11bf32b94b7f6_list.png?t=1715986800865 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000001039A6F160>: Failed to establish a new connection: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。'))
+2024-05-22 09:12	database is locked
+2024-06-03 09:25	database is locked
